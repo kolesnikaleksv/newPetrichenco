@@ -1,13 +1,13 @@
-let number = 1;
-const NUmber = 5;
+// let number = 1;
+// const NUmber = 5;
 
-number = 8;
-console.log(number);
-const obj = {
-    a: 10
-};
-obj.a = 11
-console.log(obj.a);
+// number = 8;
+// console.log(number);
+// const obj = {
+//     a: 10
+// };
+// obj.a = 11
+// console.log(obj.a);
 // alert('hello world');
 // const answer = confirm('are you  eighteen years');
 // console.log(answer);
@@ -24,13 +24,34 @@ console.log(obj.a);
 // console.log(typeof(answers));Hello ${answers[2]} you are too small for this site. you are ${answers[1]} years old
 // alert(``);
 
-let incr = 10,
-    decr = 10;
+// let incr = 10,
+//     decr = 10;
 
-    incr++;
-    ++decr;
-    console.log(incr,decr);
-    console.log(3*5 === 15);
-    let arg = 5;
-    console.log(`5 + ${arg}`);
-    console.log(`6 - ${3}`);
+//     incr++;
+//     ++decr;
+//     console.log(incr,decr);
+//     console.log(3*5 === 15);
+//     let arg = 5;
+//     console.log(`5 + ${arg}`);
+//     console.log(`6 - ${3}`);
+let numberOfFilms = +prompt('How many movies have you already watched?', '');
+console.log(numberOfFilms);
+
+const personalMovieDB = {
+    count: numberOfFilms,
+    movies: {},
+    actors: {},
+    genres: [],
+    privat: false
+};
+
+let a = prompt('One of the last movies you watched?', ''),
+    b = prompt('How mach do you appreciate it?', ''),
+    c = prompt('One of the last movies you watched?', ''),
+    d = prompt('How mach do you appreciate it?', '');
+
+personalMovieDB.movies[a] = b;
+personalMovieDB.movies[c] = d;
+
+
+console.log(personalMovieDB);
