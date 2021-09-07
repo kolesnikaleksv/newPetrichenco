@@ -90,6 +90,16 @@ const personalMovieDB = {
     privat: false
 };
 
+if(personalMovieDB.count <= 10 && personalMovieDB.count > 0) {
+    alert('You have watched too few movies.');
+} else if(personalMovieDB.count > 10 && personalMovieDB.count < 30) {
+    alert("You are a classic spectator.");
+} else if(personalMovieDB.count >= 30) {
+    alert("You are a big fan of movies.")
+} else {
+    alert("An error occurred!");
+}
+
 // let a = prompt('One of the last movies you watched?', ''),
 //     b = prompt('How mach do you appreciate it?', ''),
 //     c = prompt('One of the last movies you watched?', ''),
@@ -98,13 +108,39 @@ const personalMovieDB = {
 for(let i = 0; i < 2; i++) {
     let a = prompt('One of the last movies you watched?', ''),
         b = prompt('How mach do you appreciate it?', '');
-        personalMovieDB.movies[a] = b;
-        if(a == ""){
-            a = prompt('One of the last movies you watched?', '');
-            b = prompt('How mach do you appreciate it?', '');
+        
+        if(a == "" || b == '' || a == null || b == null ||  a.length > 50 || b.length > 50){
+            i--;
+            console.log('fail');
+        } else {
             personalMovieDB.movies[a] = b;
         }
 }
+
+//let i = 0;
+// while(i < 2) {
+//     let a = prompt('One of the last movies you watched?', ''),
+//         b = prompt('How mach do you appreciate it?', '');
+//         i++;
+//         if(a == "" || !a || a.length > 50){
+//             i--;
+//             console.log('fail');
+//         } else {
+//             personalMovieDB.movies[a] = b;
+//         }
+// }
+
+// do {
+//     let a = prompt('One of the last movies you watched?', ''),
+//         b = prompt('How mach do you appreciate it?', '');
+//         i++;
+//         if(a == "" || !a || a.length > 50){
+//             i--;
+//             console.log('fail');
+//         } else {
+//             personalMovieDB.movies[a] = b;
+//         }
+// } while(i < 2);
 
 
 // personalMovieDB.movies[a] = b;
