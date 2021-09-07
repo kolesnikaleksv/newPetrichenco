@@ -66,3 +66,35 @@ function personalLevelDetected() {
 
 console.log(personalMovieDB);
 
+//lesson
+
+const obj = {
+    name: 'carlos',
+    high: 104,
+    wedth: 205,
+    colors: {
+        border: 'black',
+        color: 'red'
+    },
+    makeTest: function(u) {
+        console.log(u);
+    }
+}
+
+//obj.makeTest('test');
+const {border, color} = obj.colors;
+//console.log(obj);
+// let i = 0;
+// for(let key in obj) {
+//     if(typeof(obj[key]) == 'object') {
+//         for(let i in obj[key]) {
+//             console.log(`key is ${i} ontions is ${obj[key][i]}`);
+//         }
+//     } else {
+//         console.log(`key is ${key} options is ${obj[key]}`);
+//     }
+//     i++;
+// }
+console.log(Object.keys(obj).length);
+
+
