@@ -34,8 +34,53 @@
 //     let arg = 5;
 //     console.log(`5 + ${arg}`);
 //     console.log(`6 - ${3}`);
+
+// (7 == 7) ? console.log('da') : console.log('net');
+
+// if (2 == 8) {
+//     console.log('yes');
+// } else {
+//     console.log('no');
+// };
+// let num = 50;
+// switch(num) {
+//     case 49:
+//         console.log('a');
+//         break;
+//     case 51:
+//         console.log('b');
+//         break;
+//     case 100:
+//         console.log('c');
+//         break;
+//     default:
+//         console.log('d')
+//         break;
+// }
+
+// // loope
+// let sum = 20;
+// while(sum <= 25) {
+//     console.log(sum);
+//     sum++;
+// }
+
+// do {
+//     console.log(sum);
+//     sum++;
+// }while(sum <= 26);
+
+// for(let i = 0; i < 10; i++) {
+    
+//     if (i === 4) {
+//         continue;
+//     } else if(i ==8) {
+//         break;
+//     }
+//      console.log(i);
+// }
+
 let numberOfFilms = +prompt('How many movies have you already watched?', '');
-console.log(numberOfFilms);
 
 const personalMovieDB = {
     count: numberOfFilms,
@@ -45,13 +90,25 @@ const personalMovieDB = {
     privat: false
 };
 
-let a = prompt('One of the last movies you watched?', ''),
-    b = prompt('How mach do you appreciate it?', ''),
-    c = prompt('One of the last movies you watched?', ''),
-    d = prompt('How mach do you appreciate it?', '');
+// let a = prompt('One of the last movies you watched?', ''),
+//     b = prompt('How mach do you appreciate it?', ''),
+//     c = prompt('One of the last movies you watched?', ''),
+//     d = prompt('How mach do you appreciate it?', '');
 
-personalMovieDB.movies[a] = b;
-personalMovieDB.movies[c] = d;
+for(let i = 0; i < 2; i++) {
+    let a = prompt('One of the last movies you watched?', ''),
+        b = prompt('How mach do you appreciate it?', '');
+        personalMovieDB.movies[a] = b;
+        if(a == ""){
+            a = prompt('One of the last movies you watched?', '');
+            b = prompt('How mach do you appreciate it?', '');
+            personalMovieDB.movies[a] = b;
+        }
+}
 
+
+// personalMovieDB.movies[a] = b;
+// personalMovieDB.movies[c] = d;
 
 console.log(personalMovieDB);
+
