@@ -32,7 +32,7 @@ function writeYourGenres() {
     }
 }
 
-writeYourGenres();
+//writeYourGenres();
 
 function rememberMyFilms() {
     for(let i = 0; i < 2; i++) {
@@ -81,20 +81,9 @@ const obj = {
     }
 }
 
-//obj.makeTest('test');
-const {border, color} = obj.colors;
-//console.log(obj);
-// let i = 0;
-// for(let key in obj) {
-//     if(typeof(obj[key]) == 'object') {
-//         for(let i in obj[key]) {
-//             console.log(`key is ${i} ontions is ${obj[key][i]}`);
-//         }
-//     } else {
-//         console.log(`key is ${key} options is ${obj[key]}`);
-//     }
-//     i++;
-// }
-console.log(Object.keys(obj).length);
+let copy = obj;
+copy.high = 105;
+console.log(copy);
+console.log(obj);
 
 
