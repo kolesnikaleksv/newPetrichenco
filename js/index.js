@@ -66,24 +66,28 @@ function personalLevelDetected() {
 
 console.log(personalMovieDB);
 
-//lesson
-
-const obj = {
-    name: 'carlos',
-    high: 104,
-    wedth: 205,
-    colors: {
-        border: 'black',
-        color: 'red'
-    },
-    makeTest: function(u) {
-        console.log(u);
+// OOP
+let john = {
+    health: 200,
+    armor: 400,
+    sayHello: function() {
+        console.log('Hello');
     }
 }
+let soldier = {
+    health: 100
+}
+//soldier.__proto__ = john; // Outdated method
+Object.setPrototypeOf(soldier, john);
 
-let copy = obj;
-copy.high = 105;
-console.log(copy);
-console.log(obj);
-
-
+console.log(soldier.armor);
+soldier.sayHello();
+// instead we have to use new mehtods
+//Object.create()        - create a prototype with a specific prototype
+//Object.getProrotypeOf()  - receives prototypes
+//Object.setPrototypeOf()  - obtaining prototypes
+//soldier.__proto__ = john; == Object.setPrototypeOf(soldier, john);
+// we create a new object joy that will be inherited from the object soldier
+const joy = Object.create(john);
+console.log(joy.health);
+joy.sayHello();
