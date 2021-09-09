@@ -24,3 +24,28 @@ const movieDB = {
     ]
 };
 
+
+
+let adv = document.querySelectorAll('.promo__adv img'),
+    genre = document.querySelectorAll('.promo__genre'),
+    promoBg = document.querySelectorAll('.promo__bg'),
+    list = document.querySelectorAll('.promo__interactive-list'),
+    movieName = list[0].querySelectorAll('.promo__interactive-item');
+
+
+let arr = [];
+for(let i = 0; i < movieDB.movies.length; i++) {
+    arr[i] = movieDB.movies[i].toLowerCase();
+    arr.sort();
+}
+arr.forEach((item, i) => {
+    movieName[i].textContent = `${i + 1}. ${item}`;
+});
+
+adv.forEach(item => {
+    item.remove();
+});
+
+genre[0].textContent = 'Драма';
+promoBg[0].style.backgroundImage = 'url("img/bg.jpg")';
+
