@@ -79,3 +79,17 @@ document.addEventListener('DOMContentLoaded', () => {
     makeChanges();
     createMoviesList(movieDB.movies,list);
 });
+
+// Events on mobile gadgets
+        // touchstart
+        // touchmove
+        // touchend
+        // touchenter
+        // touchleave
+        // touchcancel
+
+// Async, defer dynemic scripts
+const script = document.createElement('script');
+script.src = 'js/test.js';
+script.async = false; //тоді він буде звичайним скриптом
+document.body.append(script);
