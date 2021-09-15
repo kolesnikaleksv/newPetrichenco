@@ -36,8 +36,8 @@ buttons[0].addEventListener('click', () => {
 //         console.log('hi');
 //     }
 // });
-buttons.forEach(item => {
-    item.addEventListener('click', () => {
+buttons.forEach(item => {               // это не делегирование и этот обработчик не с
+    item.addEventListener('click', () => { // не сработает на новых кнопках/элементах
         console.log('hello');
     })
 })
