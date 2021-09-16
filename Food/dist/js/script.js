@@ -97,41 +97,31 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
     setClock('.timer', deadLine);
+
+    //Modal window
+
+    const btnOpen = document.querySelectorAll('[data-modal]'),
+          btnClose = document.querySelector('[data-close]'),
+          modalWindow = document.querySelector('.modal');
+
+    function openModal() {
+        btnOpen.forEach(item => {
+            item.addEventListener('click', (e) => {
+                e.preventDefault();
+                modalWindow.style.display = 'block';
+            });
+        });
+    }
+    openModal();
+
+    function closeModal() {
+        modalWindow.addEventListener('click', (e) => {
+            e.preventDefault();
+            let target = e.target;
+            if(target == modalWindow || target == btnClose) {
+                modalWindow.style.display = 'none';
+            }
+        });
+    }
+    closeModal();
 });
-//Document parametrs, windows and work with them.
-
-const box = document.querySelector('.container');
-
-// const width = box.clientWidth;
-// const high = box.clientHeight;
-// const width = box.offsetWidth;
-// const high = box.offsetHeight;
-// const width = box.scrollWidth;
-// const high = box.scrollHeight;
-
-
- const body = document.getElementsByTagName('body')[0];
-// const width = body.scrollWidth;
-// const high = body.scrollHeight;
-
-// body.addEventListener('click', () => {
-//     // body.style.heigh = body.scrollHeight + "px";
-//     // console.log(width, high);
-//     console.log(body.scrollTop);
-
-// });
-// console.log(body.getBoundingClientRect());
-//console.log(width, high);
-const style = window.getComputedStyle(body);
-
-// console.log(style);
-// console.log(style.display);
-// обращаться к document можно только через documentElement а иначе у него нет таких
-// методов
-// console.log(document.scrollTop);// не получится.
-// console.log(document.documentElement.scrollTop);// correct spelling
-// для работы в консоли эти команды работают только там 
-// первая от куда(с места нахождения пользователья) и куда отмотать
-console.log(window.scrollBy(0, 400));
-// вторая это куда мы будем начать с верха
-console.log(window.scrollTo(0, 400));
