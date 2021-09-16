@@ -1,6 +1,8 @@
 "use strict";
 document.addEventListener('DOMContentLoaded', () => {
 
+        //Tabs
+
     let tabsParent = document.querySelector('.tabheader__items'),
         tabs = document.querySelectorAll('.tabheader__item'),
         tabContent = document.querySelectorAll('.tabcontent');
@@ -40,35 +42,60 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     })
     
+    //Timer
+
+    const deadLine = '2021-09-30';
+
+    function getTimeRemaining(endTime) {
+        let t =  Date.parse(endTime) - Date.parse(new Date()),
+            days = Math.floor(t/(1000 * 60 * 60 * 24)),
+            hours = Math.floor((t/(1000 * 60 * 60)) % 24),
+            minutes = Math.floor((t/1000 / 60) % 60),
+            seconds = Math.floor((t/1000) % 60);
+
+        return {
+            'total': t,
+            'days': days,
+            'hours': hours,
+            'minutes': minutes,
+            'seconds': seconds
+        }
+    }
+
+    function getZero(num) {
+        if(num >= 0 && num < 10) {
+            console.log(num);
+            num = `0${num}`;
+            return num;
+        } else if(num < 0) {
+            return num = '00';
+        } else {
+            return num;
+        }
+    }
+
+    function setClock(selector, endTime) {
+        const timer = document.querySelector(selector),
+              days = timer.querySelector('#days'),
+              hours = timer.querySelector('#hours'),
+              minutes = timer.querySelector('#minutes'),
+              seconds = timer.querySelector('#seconds'),
+              timeInterval = setInterval(updateClock, 1000);
+              
+        updateClock(); // so as not to wait 1000 milliseconds
+
+        function updateClock() {
+            let t = getTimeRemaining(endTime);
+
+            days.innerHTML = getZero(t.days);
+            hours.innerHTML = getZero(t.hours);
+            minutes.innerHTML = getZero(t.minutes);
+            seconds.innerHTML = getZero(t.seconds);
+            
+            if(t.total <= 0) {
+                clearInterval(timeInterval);
+            }
+        }
+    }
+    setClock('.timer', deadLine);
 });
-//Work with dates
-//const now = new Date();//this object shows us thecurrent date
-// We can transfer a lot of date to this object in different ways
-//const now = new Date('2021-09-16');
-// const now = new Date(2021, 9, 16, 20);
-// The methods
-const now = new Date();
-
-// console.log(now.getFullYear());
-// console.log(now.getMonth());
-// console.log(now.getDate());
-// console.log(now.getDay()); // starting on monday
-// console.log(now.getUTCHours());//returns the Greenwich time
-
-//and getHours getMinutes etc
-
-// console.log(now.getTimezoneOffset());// returns the time difference in minutes
-//console.log(now.getTime());// returns time since 1970 in milliseconds
-
-// set
-// console.log(now.setHours(10)); // returns in milliseconds
-// console.log(now);// returns the normal date
-
-let start = new Date();
-
-for(let i = 0; i < 100000; i++) {
-    let some = i ** 3;
-}
-let end = new Date();
-
-alert(`время потраченное на вычисления ${end - start} миллисекунд`);
