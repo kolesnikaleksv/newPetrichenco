@@ -41,74 +41,34 @@ document.addEventListener('DOMContentLoaded', () => {
     })
     
 });
-//Scripts and their execution time (setTimeout, setInterval)
+//Work with dates
+//const now = new Date();//this object shows us thecurrent date
+// We can transfer a lot of date to this object in different ways
+//const now = new Date('2021-09-16');
+// const now = new Date(2021, 9, 16, 20);
+// The methods
+const now = new Date();
 
-// const timerId = setTimeout(function()  {
-//     console.log('hello');
-// }, 2000);
+// console.log(now.getFullYear());
+// console.log(now.getMonth());
+// console.log(now.getDate());
+// console.log(now.getDay()); // starting on monday
+// console.log(now.getUTCHours());//returns the Greenwich time
 
-// const timerId = setTimeout(function(text)  {
-//     console.log(text);
-// }, 2000, 'hello');
+//and getHours getMinutes etc
 
-// const timerId = setTimeout(logger, 2000);
+// console.log(now.getTimezoneOffset());// returns the time difference in minutes
+//console.log(now.getTime());// returns time since 1970 in milliseconds
 
-// function logger() {
-//     console.log('hello');
-// }
+// set
+// console.log(now.setHours(10)); // returns in milliseconds
+// console.log(now);// returns the normal date
 
-// setTimeout(logger, 2000);// const timerId - это идентификатор определенного таймера
+let start = new Date();
 
-// function logger() {
-//     console.log('hello');
-// }
-
-// clearInterval(timerId); // отключаем определенный таймер по его id
-
-const button = document.querySelector('.btn_white');
-let timerId,
-    i = 0;
-
-// button.addEventListener('click', () => {
-//     timerId = setTimeout(logger, 2000);
-//     //timerId = setInterval(logger, 2000);
-// });
-
-// clearInterval(timerId);
-
-// function logger() {
-//     console.log('hello');
-// }
-// button.addEventListener('click', () => {
-//     //timerId = setTimeout(logger, 2000);
-//     timerId = setInterval(logger, 2000);
-// });
-
-// function logger() {
-//     if(i === 3) {
-//         clearInterval(timerId);
-//     }
-//     console.log('hello');
-//     i++;
-// }
-//рекурсивный вызов setTimeout
-// let id = setTimeout(function log() {
-//     console.log('hello');
-//     id = setTimeout(log, 500);
-// },500);
-// простая анимация
-function myAnimation() {
-    const box = document.querySelector('.box');
-    let pos = 0;
-    const id = setInterval(frame, 10);
-    function frame() {
-        if(pos === 300) {
-            clearInterval(id);
-        } else {
-            pos++;
-            box.style.top = pos + 'px';
-            box.style.left = pos + 'px';
-        }
-    }
+for(let i = 0; i < 100000; i++) {
+    let some = i ** 3;
 }
-button.addEventListener('click', myAnimation);
+let end = new Date();
+
+alert(`время потраченное на вычисления ${end - start} миллисекунд`);
