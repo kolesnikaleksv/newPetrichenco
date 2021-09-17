@@ -108,7 +108,11 @@ document.addEventListener('DOMContentLoaded', () => {
         btnOpen.forEach(item => {
             item.addEventListener('click', (e) => {
                 e.preventDefault();
-                modalWindow.style.display = 'block';
+                //modalWindow.style.display = 'block';
+                // modalWindow.classList.add('show');// use the classes
+                // modalWindow.classList.remove('hide');
+                document.body.style.overflow = 'hidden';// remove scrolling
+                modalWindow.classList.toggle('show');
             });
         });
     }
@@ -119,9 +123,21 @@ document.addEventListener('DOMContentLoaded', () => {
             e.preventDefault();
             let target = e.target;
             if(target == modalWindow || target == btnClose) {
-                modalWindow.style.display = 'none';
+                // modalWindow.style.display = 'none';
+            //    modalWindow.classList.remove('show');
+            //    modalWindow.classList.add('hide');
+            modalWindow.classList.toggle('show');
+               document.body.style.overflow = '';// return scrolling
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if(e.code == 'Escape' && modalWindow.classList.contains('show')) {
+                console.log('hi');
+                modalWindow.classList.remove('show');
             }
         });
     }
     closeModal();
+   
 });
