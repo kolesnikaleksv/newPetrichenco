@@ -136,13 +136,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
    
     const timerModal = setTimeout(openModal, 5000);
-    // the first way
-    // window.addEventListener('scroll', () => {
-    //     if(window.pageYOffset + document.documentElement.clientHeight >= document.documentElement.scrollHeight) {
-    //         openModal();
-    //     }
-    // });
-    // the second way
+    
     function openModalOffset() {
         if(window.pageYOffset + document.documentElement.clientHeight >= document.documentElement.scrollHeight) {
             openModal();
@@ -151,3 +145,30 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     window.addEventListener('scroll', openModalOffset);
 });
+// The constructions function
+
+// const num = new Number(3);//outdated syntax
+// console.log(num);
+
+//The modern way
+function User(name, id) {
+    this.name = name;
+    this.id = id;
+    this.human = true;
+    this.hello = function() {
+        console.log(`hello i am ${this.name} my age is ${this.id} Am i a human? ${this.human}`)
+    }
+}
+
+const alex = new User('alex', 20);
+const kir = new User('kir', 9);
+
+console.log(alex.hello(), kir.hello());
+// У цей конструктор можна додати і інші функціі за рахунок наслідування
+User.prototype.exit = function() {
+    console.log(`${this.name} logged out`);
+}
+alex.exit();
+kir.exit();
+// зараз у js користуються тільки классами - синтаксичний цукор
+
