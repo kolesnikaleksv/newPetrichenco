@@ -152,16 +152,29 @@ document.addEventListener('DOMContentLoaded', () => {
           
 
     class CreateMenu {
-        constructor(img,subtitle, descr,price) {
+        constructor(img,subtitle, descr,price, ...classes) {
             this.img = img;
             this.subtitle = subtitle;
             this.descr = descr;
             this.price = price;
+            this.classes = classes;
+            this.transfer = 27;
+            this.changeToUah();
+        }
+
+        changeToUah() {
+            return this.price = Math.floor(this.price / this.transfer);
         }
         
-        createMenuItem() {
+        render() {
             let element = document.createElement('div');
-            element.classList.add('menu__item');
+            if(this.classes.length === 0) {
+                this.element = 'menu__item';
+                element.classList.add(this.element);
+            } else {
+                this.classes.forEach(newClass => element.classList.add(newClass));
+            }
+            
             element.innerHTML = `
                 <img src=${this.img} alt="vegy">
                 <h3 class="menu__item-subtitle">${this.subtitle}</h3>
@@ -173,16 +186,49 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
             `;
             container.append(element);
-                console.log(element);
-            
         }
     }
-    const firstItem = new CreateMenu('"img/tabs/vegy.jpg"', 'Меню "Фитнес"', 'Меню "Фитнес" - это новый подход к приготовлению блюд: больше свежих овощей и фруктов. Продукт активных и здоровых людей. Это абсолютно новый продукт с оптимальной ценой и высоким качеством!', '229');
-    const secondItem = new CreateMenu('"img/tabs/elite.jpg"', 'Меню “Премиум”', 'В меню “Премиум” мы используем не только красивый дизайн упаковки, но и качественное исполнение блюд. Красная рыба, морепродукты, фрукты - ресторанное меню без похода в ресторан!', '550');
-    const thirdItem = new CreateMenu('"img/tabs/post.jpg"', 'Меню "Постное"', 'Меню “Постное” - это тщательный подбор ингредиентов: полное отсутствие продуктов животного происхождения, молоко из миндаля, овса, кокоса или гречки, правильное количество белков за счет тофу и импортных вегетарианских стейков. ', '430');
-    firstItem.createMenuItem();
-    secondItem.createMenuItem();
-    thirdItem.createMenuItem();
+    new CreateMenu(
+        '"img/tabs/vegy.jpg"',
+         'Меню "Фитнес"', 
+         'Меню "Фитнес" - это новый подход к приготовлению блюд: больше свежих овощей и фруктов. Продукт активных и здоровых людей. Это абсолютно новый продукт с оптимальной ценой и высоким качеством!', 
+         '229'
+         ).render();
+
+     new CreateMenu(
+         '"img/tabs/elite.jpg"', 
+         'Меню “Премиум”', 
+         'В меню “Премиум” мы используем не только красивый дизайн упаковки, но и качественное исполнение блюд. Красная рыба, морепродукты, фрукты - ресторанное меню без похода в ресторан!', 
+         '550',
+         'menu__item'
+         ).render();
+    new CreateMenu(
+        '"img/tabs/post.jpg"', 
+        'Меню "Постное"', 
+        'Меню “Постное” - это тщательный подбор ингредиентов: полное отсутствие продуктов животного происхождения, молоко из миндаля, овса, кокоса или гречки, правильное количество белков за счет тофу и импортных вегетарианских стейков. ', 
+        '430',
+        'menu__item'
+        ).render();
 
 });
 
+
+// The rest operator and the default parameters
+//the rest operator is brother to the spread operator but only on the contrary
+// ...rest - но можно називать как угодно, главное что бы расположен был последним в 
+// списке аргументов
+
+const log = function(a, b, ...rest) {
+    console.log(a, b, rest);
+}
+log('a', 'b', 'sdfs', 'sdfsdf');
+
+// in the console we receive - a b [ 'sdfs', 'sdfsdf' ] 
+// последние операторы приходят в виде массива
+
+// the default parametrs
+const  doubleOrNot = function(a,b = 2) {
+    console.log(a * b);
+}
+doubleOrNot(2,3);
+doubleOrNot(2);
