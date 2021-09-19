@@ -136,7 +136,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
    
     const timerModal = setTimeout(openModal, 50000);
-    
+
     function openModalOffset() {
         if(window.pageYOffset + document.documentElement.clientHeight >= document.documentElement.scrollHeight) {
             openModal();
@@ -144,47 +144,45 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
     window.addEventListener('scroll', openModalOffset);
+
+    // A Menu
+
+    const menu = document.querySelector('.menu'),
+          container = menu.querySelector('.container');
+          
+
+    class CreateMenu {
+        constructor(img,subtitle, descr,price) {
+            this.img = img;
+            this.subtitle = subtitle;
+            this.descr = descr;
+            this.price = price;
+        }
+        
+        createMenuItem() {
+            let element = document.createElement('div');
+            element.classList.add('menu__item');
+            element.innerHTML = `
+                <img src=${this.img} alt="vegy">
+                <h3 class="menu__item-subtitle">${this.subtitle}</h3>
+                <div class="menu__item-descr">${this.descr}</div>
+                <div class="menu__item-divider"></div>
+                <div class="menu__item-price">
+                    <div class="menu__item-cost">Цена:</div>
+                    <div class="menu__item-total"><span>${this.price}</span> грн/день</div>
+                </div>
+            `;
+            container.append(element);
+                console.log(element);
+            
+        }
+    }
+    const firstItem = new CreateMenu('"img/tabs/vegy.jpg"', 'Меню "Фитнес"', 'Меню "Фитнес" - это новый подход к приготовлению блюд: больше свежих овощей и фруктов. Продукт активных и здоровых людей. Это абсолютно новый продукт с оптимальной ценой и высоким качеством!', '229');
+    const secondItem = new CreateMenu('"img/tabs/elite.jpg"', 'Меню “Премиум”', 'В меню “Премиум” мы используем не только красивый дизайн упаковки, но и качественное исполнение блюд. Красная рыба, морепродукты, фрукты - ресторанное меню без похода в ресторан!', '550');
+    const thirdItem = new CreateMenu('"img/tabs/post.jpg"', 'Меню "Постное"', 'Меню “Постное” - это тщательный подбор ингредиентов: полное отсутствие продуктов животного происхождения, молоко из миндаля, овса, кокоса или гречки, правильное количество белков за счет тофу и импортных вегетарианских стейков. ', '430');
+    firstItem.createMenuItem();
+    secondItem.createMenuItem();
+    thirdItem.createMenuItem();
+
 });
 
-// The classes
-// The class is a beautiful cover for the constructor functions
-class Rectangle {
-    constructor(width, height) {
-        this.width = width;
-        this.height = height;
-    }
-
-    square() {
-        return this.width * this.height;
-    }
-}
-
-const right = new Rectangle(25,25);
-const long = new Rectangle(25,250);
-
-console.log(right.square());
-console.log(long.square());
-
-//наследование от класса 
-// для этого мы прописываем extends и от кого наследуемся
-// для получения всех свойств родителя мі прописыываем метод super() и тогда нам не
-// надо копировать предыдущие свойства и да, супер всегда идет первой строкой и мы
-// можем указать те свойства которые хотим использовать
-
-
-class ColoredRectanglWithText extends Rectangle {
-    constructor (width, height, color, text) {
-        super(width, height);
-        this.color = color;
-        this.text = text;
-    }
-
-    showMyProps() {
-        console.log(this);
-        console.log(`my height is ${this.height} my width is ${this.width} my squere is ${this.square()}`);
-    }
-}
-
-const bar = new ColoredRectanglWithText(3,20);
-console.log(bar.square());
-bar.showMyProps();
