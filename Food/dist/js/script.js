@@ -212,23 +212,36 @@ document.addEventListener('DOMContentLoaded', () => {
 
 });
 
+// JSON format for send data and deep cloning of objects
+// for example we have an object
 
-// The rest operator and the default parameters
-//the rest operator is brother to the spread operator but only on the contrary
-// ...rest - но можно називать как угодно, главное что бы расположен был последним в 
-// списке аргументов
+// const person = {
+//     "name ": 'alex',
+//     "phoneNum": '+380523452'
+// }
+//Now we need to send this object to the server
+// we will use the built-in JSON object for this
+// console.log(JSON.stringify(person));
+// answer in console   -  {"name ":"alex","phoneNum":"+380523452"}
+// all entities written in double parentheses
+// to process the JSON input file we use the built in method - parse()
+// let answer = JSON.stringify(person);
+// console.log(answer);
 
-const log = function(a, b, ...rest) {
-    console.log(a, b, rest);
+// console.log(JSON.parse(answer));
+
+// Cloning
+// For this we will use both methods at once
+const person = {
+    "name ": 'alex',
+    "phoneNum": '+380523452',
+    persenDeep: {
+        "name": 'blue',
+        "age": 5
+    }
 }
-log('a', 'b', 'sdfs', 'sdfsdf');
 
-// in the console we receive - a b [ 'sdfs', 'sdfsdf' ] 
-// последние операторы приходят в виде массива
-
-// the default parametrs
-const  doubleOrNot = function(a,b = 2) {
-    console.log(a * b);
-}
-doubleOrNot(2,3);
-doubleOrNot(2);
+const clone = JSON.parse(JSON.stringify(person));
+console.log(person, clone);
+clone.persenDeep.name = 'red';
+console.log(person, clone);
