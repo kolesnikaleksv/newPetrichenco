@@ -263,4 +263,226 @@ document.addEventListener('DOMContentLoaded', () => {
 
 });
 
-//AJAX and communication with the server
+// Promice (ES6)
+// we can use the callback function to create the execution order:
+
+// console.log('Запрос обрабатывается...');
+
+// setTimeout(() => {
+//     console.log('Подготовка данных...');
+
+//     const goods = {
+//         name: 'TV',
+//         price: 2000
+//     };
+//     setTimeout(() => {
+//         goods.status = 'ordes';
+//         console.log(goods);
+//     }, 2000);
+// }, 2000);
+
+//but it can lead us to a callback hell. So we can use the built in Promise object.
+
+// const reg = new Promise();
+
+//we insert a callback function in this object, which has two arguments(which are the
+// methods of this Promise)
+
+// const reg = new Promise((resolve, reject) => {
+
+// });
+
+// const reg = new Promise((resolve, reject) => {
+//     setTimeout(() => {
+//         console.log('Подготовка данных...');
+    
+//         const goods = {
+//             name: 'TV',
+//             price: 2000
+//         };
+//         setTimeout(() => {
+//             goods.status = 'ordes';
+//             console.log(goods);
+//         }, 2000);
+//     }, 2000);
+// });
+
+// change the second timeout to - resolve. And send an goods object.
+// console.log('Запрос обрабатывается...');
+
+// const reg = new Promise((resolve, reject) => {
+//     setTimeout(() => {
+//         console.log('Подготовка данных...');
+    
+//         const goods = {
+//             name: 'TV',
+//             price: 2000
+//         };
+//         resolve(goods);
+//     }, 2000);
+// });
+
+// reg.then((data) => {
+//     setTimeout(() => {
+//         console.log('Данные получены...');
+//         data.status = 'ordes';
+//         console.log(data);
+//     }, 2000);
+// });
+
+// let's put another Promise insert
+// console.log('Запрос обрабатывается...');
+
+// const reg = new Promise((resolve, reject) => {
+//     setTimeout(() => {
+//         console.log('Подготовка данных...');
+    
+//         const goods = {
+//             name: 'TV',
+//             price: 2000
+//         };
+//         resolve(goods);
+//     }, 2000);
+// });
+
+// reg.then((data) => {
+//     const reg2 = new Promise((resolve, reject) => {
+//         setTimeout(() => {
+//                     data.status = 'ordes';
+//                     resolve(data);
+//         }, 2000);
+//     });
+//     reg2.then((data) => {
+//         console.log(data);
+//     });
+// });
+
+// to buid a chain of Promises we can return a new Promise
+// console.log('Запрос обрабатывается...');
+
+// const reg = new Promise((resolve, reject) => {
+//     setTimeout(() => {
+//         console.log('Подготовка данных...');
+    
+//         const goods = {
+//             name: 'TV',
+//             price: 2000
+//         };
+//         resolve(goods);
+//     }, 2000);
+// });
+
+// reg.then((data) => {
+//     return new Promise((resolve, reject) => {
+//         setTimeout(() => {
+//                     data.status = 'ordes';
+//                     resolve(data);
+//         }, 2000);
+//     }); 
+// }).then((data) => {
+//     console.log(data);
+// });
+
+// From such Promises we can return not only Promises
+// let's modify the some data
+
+// console.log('Запрос обрабатывается...');
+
+// const reg = new Promise((resolve, reject) => {
+//     setTimeout(() => {
+//         console.log('Подготовка данных...');
+    
+//         const goods = {
+//             name: 'TV',
+//             price: 2000
+//         };
+//         resolve(goods);
+//     }, 2000);
+// });
+
+// reg.then((data) => {
+//     return new Promise((resolve, reject) => {
+//         setTimeout(() => {
+//                     data.status = 'ordes';
+//                     resolve(data);
+//         }, 2000);
+//     });
+// }).then((data) => {
+//     data.someData = true; // modiry
+//     return data;          // return a new data
+// }).then(data => {
+//     console.log(data);
+// });
+
+// consider the reject() function
+
+// console.log('Запрос обрабатывается...');
+
+// const reg = new Promise((resolve, reject) => {
+//     setTimeout(() => {
+//         console.log('Подготовка данных...');
+    
+//         const goods = {
+//             name: 'TV',
+//             price: 2000
+//         };
+//         reject();       // let's insert here the reject() function here instead resolve()
+//     }, 2000);                // and nothing needs to be transfered
+// });
+
+// reg.then((data) => {
+//     return new Promise((resolve, reject) => {
+//         setTimeout(() => {
+//                     data.status = 'ordes';
+//                     resolve(data);
+//         }, 2000);
+//     });
+// }).then((data) => {
+//     data.someData = true; 
+//     return data;          
+// }).then(data => {
+//     console.log(data);
+// }).catch(() => {
+//     console.error('Что то пошло не так!');
+// });
+
+// now we consider the finally() function
+// console.log('Запрос обрабатывается...');
+
+// const reg = new Promise((resolve, reject) => {
+//     setTimeout(() => {
+//         console.log('Подготовка данных...');
+    
+//         const goods = {
+//             name: 'TV',
+//             price: 2000
+//         };
+//         resolve(goods);
+//     }, 2000);
+// });
+
+// reg.then((data) => {
+//     return new Promise((resolve, reject) => {
+//         setTimeout(() => {
+//                     data.status = 'ordes';
+//                     resolve(data);
+//         }, 2000);
+//     });
+// }).then((data) => {
+//     data.someData = true; 
+//     return data;          
+// }).then(data => {
+//     console.log(data);
+// }).catch(() => {
+//     console.error('Что то пошло не так!');
+// }).finally(() => {// we insert code into this function that cleans all forms and so on
+//     console.log('Все пройшло не погано...');
+// });
+
+const test = time => {
+    return new Promise(resolve => {
+        setTimeout(() => resolve(), time);
+    });
+}
+test(1000).then(() => console.log('1000 ms'));
+test(2000).then(() => console.log('2000 ms'));
