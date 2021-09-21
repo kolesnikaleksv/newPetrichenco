@@ -210,38 +210,57 @@ document.addEventListener('DOMContentLoaded', () => {
         'menu__item'
         ).render();
 
+        // form
+
+        const forms = document.querySelectorAll('form');
+    const message = {
+        loading: 'Загрузка...',
+        success: 'Спасибо! Скоро мы с вами свяжемся',
+        failure: 'Что-то пошло не так...'
+    };
+
+    
+    forms.forEach(item => {
+        postData(item);
+    });
+
+    function postData(form) {
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            let statusMessage = document.createElement('div');
+            statusMessage.classList.add('status');
+            statusMessage.textContent = message.loading;
+            form.appendChild(statusMessage);
+        
+            const request = new XMLHttpRequest();
+            request.open('POST', 'server.php');
+            request.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+            const formData = new FormData(form);
+
+            const object = {};
+            formData.forEach(function(value, key){
+                object[key] = value;
+            });
+            const json = JSON.stringify(object);
+
+            request.send(json);
+
+            request.addEventListener('load', () => {
+                if (request.status === 200) {
+                    console.log(request.response);
+                    statusMessage.textContent = message.success;
+                    form.reset();
+                    setTimeout(() => {
+                        statusMessage.remove();
+                    }, 2000);
+                } else {
+                    statusMessage.textContent = message.failure;
+                }
+            });
+        });
+    }
+
 });
 
-// JSON format for send data and deep cloning of objects
-// for example we have an object
-
-// const person = {
-//     "name ": 'alex',
-//     "phoneNum": '+380523452'
-// }
-//Now we need to send this object to the server
-// we will use the built-in JSON object for this
-// console.log(JSON.stringify(person));
-// answer in console   -  {"name ":"alex","phoneNum":"+380523452"}
-// all entities written in double parentheses
-// to process the JSON input file we use the built in method - parse()
-// let answer = JSON.stringify(person);
-// console.log(answer);
-
-// console.log(JSON.parse(answer));
-
-// Cloning
-// For this we will use both methods at once
-const person = {
-    "name ": 'alex',
-    "phoneNum": '+380523452',
-    persenDeep: {
-        "name": 'blue',
-        "age": 5
-    }
-}
-
-const clone = JSON.parse(JSON.stringify(person));
-console.log(person, clone);
-clone.persenDeep.name = 'red';
-console.log(person, clone);
+//AJAX and communication with the server
