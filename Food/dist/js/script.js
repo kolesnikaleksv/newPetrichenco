@@ -236,28 +236,35 @@ document.addEventListener('DOMContentLoaded', () => {
             `;
             form.insertAdjacentElement('afterend', statusMessage);
         
-            const request = new XMLHttpRequest();
-            request.open('POST', 'server.php');
-            request.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+            
+
+            // request.setRequestHeader('Content-type', 'application/json; charset=utf-8');
             const formData = new FormData(form);
+
+            
 
             const object = {};
             formData.forEach(function(value, key){
                 object[key] = value;
             });
-            const json = JSON.stringify(object);
+            
 
-            request.send(json);
-
-            request.addEventListener('load', () => {
-                if (request.status === 200) {
-                    console.log(request.response);
-                    showThanksModal(message.success);
-                    form.reset();
-                    statusMessage.remove();
-                } else {
-                    showThanksModal(message.failure);
-                }
+            fetch('server.php', {
+                method: "POST",
+                headers: {
+                    'content-type': 'application/json'
+                },
+                body: JSON.stringify(object)
+            })
+            .then(date => date.text()) // модифицируем обєкт для вывода в консоль
+            .then(date => {
+                console.log(date);
+                showThanksModal(message.success);
+                statusMessage.remove();
+            }).catch(() => {
+                showThanksModal(message.failure);
+            }).finally(() => {
+                form.reset();
             });
         });
     }
@@ -287,37 +294,3 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 4000);
     }
 });
-
-// fetch API
-// уже встроенна в браузер и позволяет работать с сервером
-//работает на промисах
-
-//fetch();
-// нам понадобится URL для отправки запросов, для єтого будем использовать
-// jsonplaceholder фейковый API для тестов. возьмем с него пример использования
-// и разберемся
-
-// fetch('https://jsonplaceholder.typicode.com/todos/1')
-//   .then(response => response.json())// преобразуем в обычный объект
-//   .then(json => console.log(json));
-// в консоль мы получаем обычный объект
-// настроим немного запрос для нашего фетча - добавим объект с настройками
-// fetch('https://jsonplaceholder.typicode.com/todos/1', {
-//     method: 'POST',     //назва методу
-//     body: JSON.stringify({name: 'Alex'}),// сюди ми можемо відправити строку або обєкт (в нашому випадку)
-//     headers: {    // також не обовязково, але не погано вказати заголовки
-//         'content-type': 'application/json'
-//     }
-// })
-//   .then(response => response.json())
-//   .then(json => console.log(json));
-// тепер змінимо трох адрессу и запросимо posts
-fetch('https://jsonplaceholder.typicode.com/posts', {
-    method: 'POST',     
-    body: JSON.stringify({name: 'Alex'}),
-    headers: {  
-        'content-type': 'application/json'
-    }
-})
-  .then(response => response.json())
-  .then(json => console.log(json));
