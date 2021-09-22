@@ -294,3 +294,71 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 4000);
     }
 });
+// Array iteration methods
+// в отличие от forEach() все последующие методы возвращают новый массив
+// filter();
+// const name = ['alex', 'kirill', 'nika', 'lyuba', 'box'];
+// const shortName = name.filter(name => {
+//     return name.length < 5;// условия можно задавать любые
+// });
+// console.log(shortName);
+
+// map() этот метод позволяет изменить каждый элемент массива
+
+// const answer = ['Alex', 'Kirill', 'Nika', 'Lyuba', 'box'];
+// const lowerName = answer.map(item =>  item.toLowerCase());
+
+// console.log(lowerName);
+// этот метод часто используют для трансформации данных
+
+// every/some
+// some() если хотя бы один элемент подходит по параметрам он вернет true
+// every() если все элементы подходят по параметрам тогда вернет true
+// const answer = ['Alex', 'Kirill', 'Nika', 'Lyuba', 'box', 2];
+// const lowerName = answer.some(item =>  item.length > 3);
+// //or const lowerName = answer.some(item => typeof(item) === 'number');
+
+// console.log(lowerName);
+// ответ будет true
+// если мы используем every() - ответ будет false
+
+// reduce() служит для схлопывания массива в одно
+// const answer = ['Alex', 'Kirill', 'Nika', 'Lyuba', 'box', 2];
+// const lowerName = answer.reduce((sum, item) =>  sum + ', ' + item); //вернет строку
+// const lowerName = answer.reduce((sum, item) =>  `${sum}, ${item}`); //вернет строку
+//можно добавить через запятую начальное значение и оно добавится
+// const lowerName = answer.reduce((sum, item) =>  sum + item, 3);
+
+
+// const answer = [8, 9, 4, 5, 5, 2];
+// const lowerName = answer.reduce((sum, item) =>  item * sum);
+
+// console.log(lowerName);
+
+// entries() метод глобального объекста который превращает объект в матрицу
+// const obj = {
+//     name: 'alex',
+//     dog: 'boxer',
+//     cat: 'miu',
+//     alex: 'person'
+// }
+
+// const newArr = Object.entries(obj);
+// console.log(newArr);
+
+// chain of methods
+
+const obj = {
+    name: 'alex',
+    kir: 'person',
+    dog: 'boxer',
+    cat: 'miu',
+    alex: 'person'
+}
+
+const newArr = Object.entries(obj)
+.filter(item => item[1] === "person")// вернет только єлементы у которых второй элем 'person'
+.map(item => item[0]);
+console.log(newArr);
+
+
