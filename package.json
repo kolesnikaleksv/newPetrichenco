@@ -1,0 +1,22 @@
+{
+  "name": "newjspetrichenko",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kolesnikaleksv/newPetrichenco.git"
+  },
+  "author": "alex",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kolesnikaleksv/newPetrichenco/issues"
+  },
+  "homepage": "https://github.com/kolesnikaleksv/newPetrichenco#readme",
+  "devDependencies": {
+    "jason-server": "^3.0.0"
+  }
+}
