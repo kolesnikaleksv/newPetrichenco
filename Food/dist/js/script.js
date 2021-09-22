@@ -287,3 +287,37 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 4000);
     }
 });
+
+// fetch API
+// уже встроенна в браузер и позволяет работать с сервером
+//работает на промисах
+
+//fetch();
+// нам понадобится URL для отправки запросов, для єтого будем использовать
+// jsonplaceholder фейковый API для тестов. возьмем с него пример использования
+// и разберемся
+
+// fetch('https://jsonplaceholder.typicode.com/todos/1')
+//   .then(response => response.json())// преобразуем в обычный объект
+//   .then(json => console.log(json));
+// в консоль мы получаем обычный объект
+// настроим немного запрос для нашего фетча - добавим объект с настройками
+// fetch('https://jsonplaceholder.typicode.com/todos/1', {
+//     method: 'POST',     //назва методу
+//     body: JSON.stringify({name: 'Alex'}),// сюди ми можемо відправити строку або обєкт (в нашому випадку)
+//     headers: {    // також не обовязково, але не погано вказати заголовки
+//         'content-type': 'application/json'
+//     }
+// })
+//   .then(response => response.json())
+//   .then(json => console.log(json));
+// тепер змінимо трох адрессу и запросимо posts
+fetch('https://jsonplaceholder.typicode.com/posts', {
+    method: 'POST',     
+    body: JSON.stringify({name: 'Alex'}),
+    headers: {  
+        'content-type': 'application/json'
+    }
+})
+  .then(response => response.json())
+  .then(json => console.log(json));
