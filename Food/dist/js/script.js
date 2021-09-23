@@ -151,45 +151,45 @@ document.addEventListener('DOMContentLoaded', () => {
           container = menu.querySelector('.container');
           
 
-    class CreateMenu {
-        constructor(img,altimg, subtitle, descr,price, parentSelector, ...classes) {
-            this.img = img;
-            this.subtitle = subtitle;
-            this.altimg = altimg;
-            this.descr = descr;
-            this.price = price;
-            this.classes = classes;
-            this.parent = document.querySelector(parentSelector);
-            this.transfer = 27;
-            this.changeToUah();
-        }
+    // class CreateMenu {
+    //     constructor(img,altimg, subtitle, descr,price, parentSelector, ...classes) {
+    //         this.img = img;
+    //         this.subtitle = subtitle;
+    //         this.altimg = altimg;
+    //         this.descr = descr;
+    //         this.price = price;
+    //         this.classes = classes;
+    //         this.parent = document.querySelector(parentSelector);
+    //         this.transfer = 27;
+    //         this.changeToUah();
+    //     }
 
-        changeToUah() {
-            return this.price = Math.floor(this.price / this.transfer);
-        }
+    //     changeToUah() {
+    //         return this.price = Math.floor(this.price / this.transfer);
+    //     }
         
-        render() {
-            let element = document.createElement('div');
-            if(this.classes.length === 0) {
-                this.element = 'menu__item';
-                element.classList.add(this.element);
-            } else {
-                this.classes.forEach(newClass => element.classList.add(newClass));
-            }
+    //     render() {
+    //         let element = document.createElement('div');
+    //         if(this.classes.length === 0) {
+    //             this.element = 'menu__item';
+    //             element.classList.add(this.element);
+    //         } else {
+    //             this.classes.forEach(newClass => element.classList.add(newClass));
+    //         }
             
-            element.innerHTML = `
-                <img src=${this.img} alt=${this.altimg}>
-                <h3 class="menu__item-subtitle">${this.subtitle}</h3>
-                <div class="menu__item-descr">${this.descr}</div>
-                <div class="menu__item-divider"></div>
-                <div class="menu__item-price">
-                    <div class="menu__item-cost">Цена:</div>
-                    <div class="menu__item-total"><span>${this.price}</span> грн/день</div>
-                </div>
-            `;
-            this.parent.append(element);
-        }
-    }
+    //         element.innerHTML = `
+    //             <img src=${this.img} alt=${this.altimg}>
+    //             <h3 class="menu__item-subtitle">${this.subtitle}</h3>
+    //             <div class="menu__item-descr">${this.descr}</div>
+    //             <div class="menu__item-divider"></div>
+    //             <div class="menu__item-price">
+    //                 <div class="menu__item-cost">Цена:</div>
+    //                 <div class="menu__item-total"><span>${this.price}</span> грн/день</div>
+    //             </div>
+    //         `;
+    //         this.parent.append(element);
+    //     }
+    // }
 
     const getData = async (url) => { // now we dont need to send anything
         const res = await fetch(url); // у промиса который возвращается из fetch есть два свойства
@@ -202,11 +202,31 @@ document.addEventListener('DOMContentLoaded', () => {
         return await res.json();
     }
    getData('http://localhost:3000/menu')
-   .then(data => {
-       data.forEach(({img, altimg, title, descr, price})=> {
-            new CreateMenu(img, altimg, title, descr, price, '.menu .container').render();
-       });
-   });
+//    .then(data => {
+//        data.forEach(({img, altimg, title, descr, price})=> {
+//             new CreateMenu(img, altimg, title, descr, price, '.menu .container').render();
+//        });
+//    });
+    .then(data => createCard(data));
+
+    function createCard(data) {
+        data.forEach(({img, altimg, title, descr, price}) => {
+            let element = document.createElement('div');
+            price = price * 27;
+            element.classList.add('menu__item');
+            element.innerHTML = `
+                <img src=${img} alt=${altimg}>
+                <h3 class="menu__item-subtitle">${title}</h3>
+                <div class="menu__item-descr">${descr}</div>
+                <div class="menu__item-divider"></div>
+                <div class="menu__item-price">
+                    <div class="menu__item-cost">Цена:</div>
+                    <div class="menu__item-total"><span>${price}</span> грн/день</div>
+                </div>d
+            `;
+            document.querySelector('.menu .container').append(element);
+        });
+    };
     // new CreateMenu(
     //     '"img/tabs/vegy.jpg"',
     //      'Меню "Фитнес"', 
