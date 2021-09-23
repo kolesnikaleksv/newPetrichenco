@@ -254,12 +254,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
             
 
-            const object = {};
-            formData.forEach(function(value, key){
-                object[key] = value;
-            });
-            
-            postData('http://localhost:3000/requests', JSON.stringify(object))
+            // const object = {};
+            // formData.forEach(function(value, key){
+            //     object[key] = value;
+            // });
+            const json = JSON.stringify(Object.fromEntries(formData.entries()));
+            // преображаем нашу formData in json более современным способом
+            //formData.entries() - получаем данные в виде матрицы
+            //Object.fromEntries() - превращаем матрицу обратно в объект
+            //JSON.stringify() - превращаем в json
+            postData('http://localhost:3000/requests', json)
             .then(date => {
                 console.log(date);
                 showThanksModal(message.success);
