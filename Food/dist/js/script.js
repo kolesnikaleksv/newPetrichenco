@@ -152,12 +152,14 @@ document.addEventListener('DOMContentLoaded', () => {
           
 
     class CreateMenu {
-        constructor(img,subtitle, descr,price, ...classes) {
+        constructor(img,altimg, subtitle, descr,price, parentSelector, ...classes) {
             this.img = img;
             this.subtitle = subtitle;
+            this.altimg = altimg;
             this.descr = descr;
             this.price = price;
             this.classes = classes;
+            this.parent = document.querySelector(parentSelector);
             this.transfer = 27;
             this.changeToUah();
         }
@@ -176,7 +178,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             
             element.innerHTML = `
-                <img src=${this.img} alt="vegy">
+                <img src=${this.img} alt=${this.altimg}>
                 <h3 class="menu__item-subtitle">${this.subtitle}</h3>
                 <div class="menu__item-descr">${this.descr}</div>
                 <div class="menu__item-divider"></div>
@@ -185,34 +187,52 @@ document.addEventListener('DOMContentLoaded', () => {
                     <div class="menu__item-total"><span>${this.price}</span> грн/день</div>
                 </div>
             `;
-            container.append(element);
+            this.parent.append(element);
         }
     }
-    new CreateMenu(
-        '"img/tabs/vegy.jpg"',
-         'Меню "Фитнес"', 
-         'Меню "Фитнес" - это новый подход к приготовлению блюд: больше свежих овощей и фруктов. Продукт активных и здоровых людей. Это абсолютно новый продукт с оптимальной ценой и высоким качеством!', 
-         '229'
-         ).render();
 
-     new CreateMenu(
-         '"img/tabs/elite.jpg"', 
-         'Меню “Премиум”', 
-         'В меню “Премиум” мы используем не только красивый дизайн упаковки, но и качественное исполнение блюд. Красная рыба, морепродукты, фрукты - ресторанное меню без похода в ресторан!', 
-         '550',
-         'menu__item'
-         ).render();
-    new CreateMenu(
-        '"img/tabs/post.jpg"', 
-        'Меню "Постное"', 
-        'Меню “Постное” - это тщательный подбор ингредиентов: полное отсутствие продуктов животного происхождения, молоко из миндаля, овса, кокоса или гречки, правильное количество белков за счет тофу и импортных вегетарианских стейков. ', 
-        '430',
-        'menu__item'
-        ).render();
+    const getData = async (url) => { // now we dont need to send anything
+        const res = await fetch(url); // у промиса который возвращается из fetch есть два свойства
+        //.ok- мы что то получили, все ок либо не ок 
+        //status - мы подаем на статус который вернул нам статус (200,300, 400...)
+        if(!res.ok) {
+            // мы можем принудительно выкинуть объект ошибки Error. создаем ее
+            throw new Error(`Could not fetch ${url} status: ${res.status}`);
+        }
+        return await res.json();
+    }
+   getData('http://localhost:3000/menu')
+   .then(data => {
+       data.forEach(({img, altimg, title, descr, price})=> {
+            new CreateMenu(img, altimg, title, descr, price, '.menu .container').render();
+       });
+   });
+    // new CreateMenu(
+    //     '"img/tabs/vegy.jpg"',
+    //      'Меню "Фитнес"', 
+    //      'Меню "Фитнес" - это новый подход к приготовлению блюд: больше свежих овощей и фруктов. Продукт активных и здоровых людей. Это абсолютно новый продукт с оптимальной ценой и высоким качеством!', 
+    //      '229'
+    //      ).render();
+
+    //  new CreateMenu(
+    //      '"img/tabs/elite.jpg"', 
+    //      'Меню “Премиум”', 
+    //      'В меню “Премиум” мы используем не только красивый дизайн упаковки, но и качественное исполнение блюд. Красная рыба, морепродукты, фрукты - ресторанное меню без похода в ресторан!', 
+    //      '550',
+    //      'menu__item'
+    //      ).render();
+    // new CreateMenu(
+    //     '"img/tabs/post.jpg"', 
+    //     'Меню "Постное"', 
+    //     'Меню “Постное” - это тщательный подбор ингредиентов: полное отсутствие продуктов животного происхождения, молоко из миндаля, овса, кокоса или гречки, правильное количество белков за счет тофу и импортных вегетарианских стейков. ', 
+    //     '430',
+    //     'menu__item'
+    //     ).render();
 
         // form
 
-        const forms = document.querySelectorAll('form');
+    const forms = document.querySelectorAll('form');
+
     const message = {
         loading: 'img/form/spinner.svg',
         success: 'Спасибо! Скоро мы с вами свяжемся',
@@ -247,22 +267,10 @@ document.addEventListener('DOMContentLoaded', () => {
             `;
             form.insertAdjacentElement('afterend', statusMessage);
         
-            
-
-            // request.setRequestHeader('Content-type', 'application/json; charset=utf-8');
             const formData = new FormData(form);
 
-            
-
-            // const object = {};
-            // formData.forEach(function(value, key){
-            //     object[key] = value;
-            // });
             const json = JSON.stringify(Object.fromEntries(formData.entries()));
-            // преображаем нашу formData in json более современным способом
-            //formData.entries() - получаем данные в виде матрицы
-            //Object.fromEntries() - превращаем матрицу обратно в объект
-            //JSON.stringify() - превращаем в json
+            
             postData('http://localhost:3000/requests', json)
             .then(date => {
                 console.log(date);
