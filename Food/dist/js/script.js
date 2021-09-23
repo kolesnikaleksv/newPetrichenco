@@ -151,82 +151,85 @@ document.addEventListener('DOMContentLoaded', () => {
           container = menu.querySelector('.container');
           
 
-    // class CreateMenu {
-    //     constructor(img,altimg, subtitle, descr,price, parentSelector, ...classes) {
-    //         this.img = img;
-    //         this.subtitle = subtitle;
-    //         this.altimg = altimg;
-    //         this.descr = descr;
-    //         this.price = price;
-    //         this.classes = classes;
-    //         this.parent = document.querySelector(parentSelector);
-    //         this.transfer = 27;
-    //         this.changeToUah();
-    //     }
-
-    //     changeToUah() {
-    //         return this.price = Math.floor(this.price / this.transfer);
-    //     }
-        
-    //     render() {
-    //         let element = document.createElement('div');
-    //         if(this.classes.length === 0) {
-    //             this.element = 'menu__item';
-    //             element.classList.add(this.element);
-    //         } else {
-    //             this.classes.forEach(newClass => element.classList.add(newClass));
-    //         }
-            
-    //         element.innerHTML = `
-    //             <img src=${this.img} alt=${this.altimg}>
-    //             <h3 class="menu__item-subtitle">${this.subtitle}</h3>
-    //             <div class="menu__item-descr">${this.descr}</div>
-    //             <div class="menu__item-divider"></div>
-    //             <div class="menu__item-price">
-    //                 <div class="menu__item-cost">Цена:</div>
-    //                 <div class="menu__item-total"><span>${this.price}</span> грн/день</div>
-    //             </div>
-    //         `;
-    //         this.parent.append(element);
-    //     }
-    // }
-
-    const getData = async (url) => { // now we dont need to send anything
-        const res = await fetch(url); // у промиса который возвращается из fetch есть два свойства
-        //.ok- мы что то получили, все ок либо не ок 
-        //status - мы подаем на статус который вернул нам статус (200,300, 400...)
-        if(!res.ok) {
-            // мы можем принудительно выкинуть объект ошибки Error. создаем ее
-            throw new Error(`Could not fetch ${url} status: ${res.status}`);
+    class CreateMenu {
+        constructor(img,altimg, subtitle, descr,price, parentSelector, ...classes) {
+            this.img = img;
+            this.subtitle = subtitle;
+            this.altimg = altimg;
+            this.descr = descr;
+            this.price = price;
+            this.classes = classes;
+            this.parent = document.querySelector(parentSelector);
+            this.transfer = 27;
+            this.changeToUah();
         }
-        return await res.json();
+
+        changeToUah() {
+            return this.price = Math.floor(this.price / this.transfer);
+        }
+        
+        render() {
+            let element = document.createElement('div');
+            if(this.classes.length === 0) {
+                this.element = 'menu__item';
+                element.classList.add(this.element);
+            } else {
+                this.classes.forEach(newClass => element.classList.add(newClass));
+            }
+            
+            element.innerHTML = `
+                <img src=${this.img} alt=${this.altimg}>
+                <h3 class="menu__item-subtitle">${this.subtitle}</h3>
+                <div class="menu__item-descr">${this.descr}</div>
+                <div class="menu__item-divider"></div>
+                <div class="menu__item-price">
+                    <div class="menu__item-cost">Цена:</div>
+                    <div class="menu__item-total"><span>${this.price}</span> грн/день</div>
+                </div>
+            `;
+            this.parent.append(element);
+        }
     }
-   getData('http://localhost:3000/menu')
+
+    // const getData = async (url) => { 
+    //     const res = await fetch(url);
+    //     if(!res.ok) {
+    //         throw new Error(`Could not fetch ${url} status: ${res.status}`);
+    //     }
+    //     return await res.json();
+    // }
+    axios.get('http://localhost:3000/menu')
+    .then(data => {
+        data.data.forEach(({img, altimg, title, descr, price})=> {
+        new CreateMenu(img, altimg, title, descr, price, '.menu .container').render();
+        });
+    });
+//    getData('http://localhost:3000/menu')
 //    .then(data => {
 //        data.forEach(({img, altimg, title, descr, price})=> {
 //             new CreateMenu(img, altimg, title, descr, price, '.menu .container').render();
 //        });
 //    });
-    .then(data => createCard(data));
+    // .then(data => createCard(data));
 
-    function createCard(data) {
-        data.forEach(({img, altimg, title, descr, price}) => {
-            let element = document.createElement('div');
-            price = price * 27;
-            element.classList.add('menu__item');
-            element.innerHTML = `
-                <img src=${img} alt=${altimg}>
-                <h3 class="menu__item-subtitle">${title}</h3>
-                <div class="menu__item-descr">${descr}</div>
-                <div class="menu__item-divider"></div>
-                <div class="menu__item-price">
-                    <div class="menu__item-cost">Цена:</div>
-                    <div class="menu__item-total"><span>${price}</span> грн/день</div>
-                </div>d
-            `;
-            document.querySelector('.menu .container').append(element);
-        });
-    };
+    // function createCard(data) {
+    //     data.forEach(({img, altimg, title, descr, price}) => {
+    //         let element = document.createElement('div');
+    //         price = price * 27;
+    //         element.classList.add('menu__item');
+    //         element.innerHTML = `
+    //             <img src=${img} alt=${altimg}>
+    //             <h3 class="menu__item-subtitle">${title}</h3>
+    //             <div class="menu__item-descr">${descr}</div>
+    //             <div class="menu__item-divider"></div>
+    //             <div class="menu__item-price">
+    //                 <div class="menu__item-cost">Цена:</div>
+    //                 <div class="menu__item-total"><span>${price}</span> грн/день</div>
+    //             </div>d
+    //         `;
+    //         document.querySelector('.menu .container').append(element);
+    //     });
+    // };
     // new CreateMenu(
     //     '"img/tabs/vegy.jpg"',
     //      'Меню "Фитнес"', 
