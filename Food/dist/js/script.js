@@ -147,8 +147,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // A Menu
 
-    const menu = document.querySelector('.menu'),
-          container = menu.querySelector('.container');
+    const menu = document.querySelector('.menu');
           
 
     class CreateMenu {
@@ -191,66 +190,21 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // const getData = async (url) => { 
-    //     const res = await fetch(url);
-    //     if(!res.ok) {
-    //         throw new Error(`Could not fetch ${url} status: ${res.status}`);
-    //     }
-    //     return await res.json();
-    // }
-    axios.get('http://localhost:3000/menu')
-    .then(data => {
-        data.data.forEach(({img, altimg, title, descr, price})=> {
-        new CreateMenu(img, altimg, title, descr, price, '.menu .container').render();
-        });
-    });
+    const getData = async (url) => { 
+        const res = await fetch(url);
+        if(!res.ok) {
+            throw new Error(`Could not fetch ${url} status: ${res.status}`);
+        }
+        return await res.json();
+    }
+
 //    getData('http://localhost:3000/menu')
 //    .then(data => {
 //        data.forEach(({img, altimg, title, descr, price})=> {
 //             new CreateMenu(img, altimg, title, descr, price, '.menu .container').render();
 //        });
 //    });
-    // .then(data => createCard(data));
 
-    // function createCard(data) {
-    //     data.forEach(({img, altimg, title, descr, price}) => {
-    //         let element = document.createElement('div');
-    //         price = price * 27;
-    //         element.classList.add('menu__item');
-    //         element.innerHTML = `
-    //             <img src=${img} alt=${altimg}>
-    //             <h3 class="menu__item-subtitle">${title}</h3>
-    //             <div class="menu__item-descr">${descr}</div>
-    //             <div class="menu__item-divider"></div>
-    //             <div class="menu__item-price">
-    //                 <div class="menu__item-cost">Цена:</div>
-    //                 <div class="menu__item-total"><span>${price}</span> грн/день</div>
-    //             </div>d
-    //         `;
-    //         document.querySelector('.menu .container').append(element);
-    //     });
-    // };
-    // new CreateMenu(
-    //     '"img/tabs/vegy.jpg"',
-    //      'Меню "Фитнес"', 
-    //      'Меню "Фитнес" - это новый подход к приготовлению блюд: больше свежих овощей и фруктов. Продукт активных и здоровых людей. Это абсолютно новый продукт с оптимальной ценой и высоким качеством!', 
-    //      '229'
-    //      ).render();
-
-    //  new CreateMenu(
-    //      '"img/tabs/elite.jpg"', 
-    //      'Меню “Премиум”', 
-    //      'В меню “Премиум” мы используем не только красивый дизайн упаковки, но и качественное исполнение блюд. Красная рыба, морепродукты, фрукты - ресторанное меню без похода в ресторан!', 
-    //      '550',
-    //      'menu__item'
-    //      ).render();
-    // new CreateMenu(
-    //     '"img/tabs/post.jpg"', 
-    //     'Меню "Постное"', 
-    //     'Меню “Постное” - это тщательный подбор ингредиентов: полное отсутствие продуктов животного происхождения, молоко из миндаля, овса, кокоса или гречки, правильное количество белков за счет тофу и импортных вегетарианских стейков. ', 
-    //     '430',
-    //     'menu__item'
-    //     ).render();
 
         // form
 
@@ -332,7 +286,50 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 4000);
     }
 
-    // fetch('http://localhost:3000/menu')
-    //     .then(data => data.json())
-    //     .then(res => console.log(res));
+    //slider
+
+    const prevSlide = document.querySelector('.offer__slider-prev'),
+          nextSlide = document.querySelector('.offer__slider-next'),
+          current = document.querySelector('#current'),
+          total = document.querySelector('#total'),
+          slides = document.querySelectorAll('.offer__slide');
+
+    let slideIndex = 1;
+    showSlide(slideIndex);
+
+    total.innerHTML = `${getZero(slides.length)}`;
+
+    prevSlide.addEventListener('click', () => {
+        if(slideIndex <= 1) {
+            slideIndex = slides.length;
+            showSlide(slideIndex);
+            console.log(slideIndex);
+        } else {
+            slideIndex = slideIndex - 1;
+            showSlide(slideIndex);
+        }
+        
+    });
+    nextSlide.addEventListener('click', () => {
+        if(slideIndex >= 4) {
+            slideIndex = 1;
+            showSlide(slideIndex);
+        } else {
+            slideIndex = slideIndex + 1;
+        showSlide(slideIndex);
+        }
+        
+    });
+
+    
+
+    function showSlide() {
+        slides.forEach(item => item.classList.add('hide'));
+        slides[slideIndex - 1].classList.add('show');
+        slides[slideIndex - 1].classList.remove('hide');
+        current.innerHTML = `${getZero(slideIndex)}`;
+    }
+    
+    
+    
 });
