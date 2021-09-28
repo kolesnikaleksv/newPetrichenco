@@ -341,6 +341,7 @@ document.addEventListener('DOMContentLoaded', () => {
         
         let slideIndex = 1;
         let offset = 0; // offset size
+        let dots =[];
 
         if(slides.length < 10) {
             total.textContent = `0${slides.length}`;
@@ -378,6 +379,8 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             current.textContent = slideIndex;
         }
+        dots.forEach(dot => dot.style.opacity = '.5');
+        dots[slideIndex - 1].style.opacity = 1;
     });
 
     prev.addEventListener('click', () => {
@@ -399,8 +402,49 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             current.textContent = slideIndex;
         }
+        dots.forEach(dot => dot.style.opacity = '.5');
+        dots[slideIndex - 1].style.opacity = 1;
     });
     
+    let slider = document.querySelector('.offer__slider');
+        slider.style.position = 'relative';
+
+    let dotWrapper = document.createElement('div');
+        dotWrapper.classList.add('carousel-indicators');
+        slider.append(dotWrapper);
+        
     
+    for(let i = 0; i < slides.length; i++) {
+        let dot = document.createElement('div');
+        dot.setAttribute('data-slide-to', i + 1);
+        dot.classList.add('dot');
+        
+        if(i == 0) {
+            dot.style.opacity = 1;
+        }
+        dotWrapper.append(dot);
+        dots.push(dot);
+    }
     
+
+    
+    dots.forEach((dot) => {
+        dot.addEventListener('click', (e) => {
+            const slideTo = e.target.getAttribute('data-slide-to');
+            slideIndex = slideTo;
+            offset = +width.slice(0, width.length - 2) * (slideTo - 1);
+
+            slidesField.style.transform = `translateX(-${offset}px)`;
+           
+            if(slides.length < 10) {
+                current.textContent = `0${slideIndex}`;
+            } else {
+                current.textContent = slideIndex;
+            }
+
+            dots.forEach(dot => dot.style.opacity = '.5');
+            dots[slideIndex - 1].style.opacity = 1;
+        });
+    });
+   
 });
