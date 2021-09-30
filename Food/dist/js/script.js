@@ -342,6 +342,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let slideIndex = 1;
         let offset = 0; // offset size
         let dots =[];
+        
 
         if(slides.length < 10) {
             total.textContent = `0${slides.length}`;
@@ -359,12 +360,14 @@ document.addEventListener('DOMContentLoaded', () => {
     slides.forEach(item => {
         item.style.width = width;//give all slides the width of the window
     });
-
+    function deleteNotDigits(str) {
+        return +str.replace(/\D/g, '');
+    }
     next.addEventListener('click', () => {
-        if(offset == +width.slice(0, width.length - 2) * (slides.length - 1)) {// 500px
+        if(offset == deleteNotDigits(width) * (slides.length - 1)) {// 500px
             offset = 0;
         } else {
-            offset += +width.slice(0, width.length - 2);
+            offset += deleteNotDigits(width);
         }
         slidesField.style.transform = `translateX(-${offset}px)`;
 
@@ -379,9 +382,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     prev.addEventListener('click', () => {
         if(offset == 0) {// 500px
-            offset = +width.slice(0, width.length - 2) * (slides.length - 1);
+            offset = deleteNotDigits(width) * (slides.length - 1);
         } else {
-            offset -= +width.slice(0, width.length - 2);
+            offset -= deleteNotDigits(width);
         }
         slidesField.style.transform = `translateX(-${offset}px)`;
 
@@ -430,7 +433,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const slideTo = e.target.getAttribute('data-slide-to');
 
             slideIndex = slideTo;
-            offset = +width.slice(0, width.length - 2) * (slideTo - 1);
+            offset = deleteNotDigits(width) * (slideTo - 1);
 
             slidesField.style.transform = `translateX(-${offset}px)`;
            
@@ -439,79 +442,3 @@ document.addEventListener('DOMContentLoaded', () => {
     });
    
 });
-// Regular expressions
-// All regular expressions consist of two parts - patterns and flags
-// There are several ways to create regExp
-    // new regExp('pattern', 'flags');
-// or
-    // /pattern/flags
-// regExp has several methods
-
-    // const ans = prompt('Enter your name');
-
-    // const reg = /n/; // we are looking for the small letter n
-//method - search() searches only the first occurrence 
-//method - mach() receive an array - ['n', index: 7, input: 'asdfaflnm', groups: undefined]
-//    console.log(ans.search(reg));
-//    console.log(ans.match(reg));
-// Если нам нужно найти все вхождения с match()мы должны поставить флаг глобальности
-
-// flags
-// i - будь який регістр
-// g - декілька входжень
-// m - багатостроковість
-//method - replace()
-// const password = prompt('Enter your password');
-// . - all elements in the string
-// console.log(password.replace(/./g, '*'));
-// \ - shielding екранування
-// console.log(password.replace(/\./g, '*'));
-
-//one more replace
-// console.log('17-23-65'.replace(/-/g, ':'));
-//17:23:65
-
-// method test() - gets either true or false
-    // const ans = prompt('Enter your name');
-
-    // const reg = /n/ig; 
-
-    // console.log(reg.test(ans));
-//true or false
-
-// in regExp there are classes :
-// \d - numbers
-// \w - all words adn letters
-// \s - all spaces
-    // const ans = prompt('Enter your numbers');
-
-    // const reg = /\d/; 
-
-    // console.log(ans.match(reg));
-//(3) ['3', '4', '5']
-
-    // const str = 'My name is R2D2';
-
-    // const reg = /\w\d\w\d/i; 
-
-    // console.log(str.match(reg));
-//[ 'R2D2', index: 11, input: 'My name is R2D2', groups: undefined ]
-
-// також є і зворотні класси т.є. навпаки ми шукаємо не числа D, не строку W, не пробіл S
-// \D
-// \W
-// \S
-    // const str = 'My name is R2D2';
-
-    // const reg = /\W/ig; 
-
-    // console.log(str.match(reg));
-//[ ' ', ' ', ' ' ] all no letters. we receive three spaces
-
-    const str = 'My name is R2D2';
-
-    const reg = /\D/ig; 
-
-    console.log(str.match(reg));
-//[ 'M', 'y', ' ', 'n', 'a', 'm', 'e', ' ', 'i', 's', ' ', 'R', 'D' ]
-// We receive all the notnumbers
