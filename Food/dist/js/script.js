@@ -374,13 +374,7 @@ document.addEventListener('DOMContentLoaded', () => {
             slideIndex++;
         }
 
-        if(slides.length < 10) {
-            current.textContent = `0${slideIndex}`;
-        } else {
-            current.textContent = slideIndex;
-        }
-        dots.forEach(dot => dot.style.opacity = '.5');
-        dots[slideIndex - 1].style.opacity = 1;
+        checkDots();
     });
 
     prev.addEventListener('click', () => {
@@ -396,14 +390,8 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             slideIndex--;
         }
-    
-        if(slides.length < 10) {
-            current.textContent = `0${slideIndex}`;
-        } else {
-            current.textContent = slideIndex;
-        }
-        dots.forEach(dot => dot.style.opacity = '.5');
-        dots[slideIndex - 1].style.opacity = 1;
+
+        checkDots();
     });
     
     let slider = document.querySelector('.offer__slider');
@@ -426,25 +414,73 @@ document.addEventListener('DOMContentLoaded', () => {
         dots.push(dot);
     }
     
+    function checkDots() {
+        if(slides.length < 10) {
+            current.textContent = `0${slideIndex}`;
+        } else {
+            current.textContent = slideIndex;
+        }
 
+        dots.forEach(dot => dot.style.opacity = '.5');
+        dots[slideIndex - 1].style.opacity = 1;
+    }
     
     dots.forEach((dot) => {
         dot.addEventListener('click', (e) => {
             const slideTo = e.target.getAttribute('data-slide-to');
+
             slideIndex = slideTo;
             offset = +width.slice(0, width.length - 2) * (slideTo - 1);
 
             slidesField.style.transform = `translateX(-${offset}px)`;
            
-            if(slides.length < 10) {
-                current.textContent = `0${slideIndex}`;
-            } else {
-                current.textContent = slideIndex;
-            }
-
-            dots.forEach(dot => dot.style.opacity = '.5');
-            dots[slideIndex - 1].style.opacity = 1;
+            checkDots();
         });
     });
    
 });
+// How to save a data without a database. Working with localStorage
+
+// it stores data as a key and value
+// localStorage is a global object. it has own methods:
+
+// localStorage.setItem('number', 2); 
+// localStorage.getItem('number'); 
+// localStorage.removeItem('number'); 
+// localStorage.clear(); // cleaning all localStorage 
+//calculating__choose-item calculating__choose-item_active
+const gender = document.querySelector('#gender'),
+      weight = document.querySelector('#weight'),
+      height = document.querySelector('#height'),
+      calcField = document.querySelector('.calculating__field'),
+      woman = document.querySelectorAll('div .calculating__choose-item')[0],
+      man = document.querySelectorAll('div .calculating__choose-item')[1];
+
+      
+      if(localStorage.getItem('gender') === 'man') {
+          console.log('man');
+          woman.classList.remove('calculating__choose-item_active')
+          man.classList.add('calculating__choose-item_active')
+      } else {
+          console.log('woman');
+          man.classList.remove('calculating__choose-item_active')
+          woman.classList.add('calculating__choose-item_active')
+      }
+      man.addEventListener('click', () => {
+        localStorage.setItem('gender', 'man');
+      });
+
+      woman.addEventListener('click', () => {
+        localStorage.setItem('gender', 'woman');
+      });
+// We can save the object in localStorage. in format JSON
+
+let person = {
+    name: 'alex',
+    age: 28
+}
+
+const objectPersonInJSON = JSON.stringify(person);
+localStorage.setItem('alex', objectPersonInJSON);
+
+console.log(JSON.parse(localStorage.getItem('alex')));
