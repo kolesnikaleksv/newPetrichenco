@@ -439,48 +439,79 @@ document.addEventListener('DOMContentLoaded', () => {
     });
    
 });
-// How to save a data without a database. Working with localStorage
+// Regular expressions
+// All regular expressions consist of two parts - patterns and flags
+// There are several ways to create regExp
+    // new regExp('pattern', 'flags');
+// or
+    // /pattern/flags
+// regExp has several methods
 
-// it stores data as a key and value
-// localStorage is a global object. it has own methods:
+    // const ans = prompt('Enter your name');
 
-// localStorage.setItem('number', 2); 
-// localStorage.getItem('number'); 
-// localStorage.removeItem('number'); 
-// localStorage.clear(); // cleaning all localStorage 
-//calculating__choose-item calculating__choose-item_active
-const gender = document.querySelector('#gender'),
-      weight = document.querySelector('#weight'),
-      height = document.querySelector('#height'),
-      calcField = document.querySelector('.calculating__field'),
-      woman = document.querySelectorAll('div .calculating__choose-item')[0],
-      man = document.querySelectorAll('div .calculating__choose-item')[1];
+    // const reg = /n/; // we are looking for the small letter n
+//method - search() searches only the first occurrence 
+//method - mach() receive an array - ['n', index: 7, input: 'asdfaflnm', groups: undefined]
+//    console.log(ans.search(reg));
+//    console.log(ans.match(reg));
+// Если нам нужно найти все вхождения с match()мы должны поставить флаг глобальности
 
-      
-      if(localStorage.getItem('gender') === 'man') {
-          console.log('man');
-          woman.classList.remove('calculating__choose-item_active')
-          man.classList.add('calculating__choose-item_active')
-      } else {
-          console.log('woman');
-          man.classList.remove('calculating__choose-item_active')
-          woman.classList.add('calculating__choose-item_active')
-      }
-      man.addEventListener('click', () => {
-        localStorage.setItem('gender', 'man');
-      });
+// flags
+// i - будь який регістр
+// g - декілька входжень
+// m - багатостроковість
+//method - replace()
+// const password = prompt('Enter your password');
+// . - all elements in the string
+// console.log(password.replace(/./g, '*'));
+// \ - shielding екранування
+// console.log(password.replace(/\./g, '*'));
 
-      woman.addEventListener('click', () => {
-        localStorage.setItem('gender', 'woman');
-      });
-// We can save the object in localStorage. in format JSON
+//one more replace
+// console.log('17-23-65'.replace(/-/g, ':'));
+//17:23:65
 
-let person = {
-    name: 'alex',
-    age: 28
-}
+// method test() - gets either true or false
+    // const ans = prompt('Enter your name');
 
-const objectPersonInJSON = JSON.stringify(person);
-localStorage.setItem('alex', objectPersonInJSON);
+    // const reg = /n/ig; 
 
-console.log(JSON.parse(localStorage.getItem('alex')));
+    // console.log(reg.test(ans));
+//true or false
+
+// in regExp there are classes :
+// \d - numbers
+// \w - all words adn letters
+// \s - all spaces
+    // const ans = prompt('Enter your numbers');
+
+    // const reg = /\d/; 
+
+    // console.log(ans.match(reg));
+//(3) ['3', '4', '5']
+
+    // const str = 'My name is R2D2';
+
+    // const reg = /\w\d\w\d/i; 
+
+    // console.log(str.match(reg));
+//[ 'R2D2', index: 11, input: 'My name is R2D2', groups: undefined ]
+
+// також є і зворотні класси т.є. навпаки ми шукаємо не числа D, не строку W, не пробіл S
+// \D
+// \W
+// \S
+    // const str = 'My name is R2D2';
+
+    // const reg = /\W/ig; 
+
+    // console.log(str.match(reg));
+//[ ' ', ' ', ' ' ] all no letters. we receive three spaces
+
+    const str = 'My name is R2D2';
+
+    const reg = /\D/ig; 
+
+    console.log(str.match(reg));
+//[ 'M', 'y', ' ', 'n', 'a', 'm', 'e', ' ', 'i', 's', ' ', 'R', 'D' ]
+// We receive all the notnumbers
