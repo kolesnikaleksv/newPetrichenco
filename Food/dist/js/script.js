@@ -551,3 +551,33 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 });
+
+// Getters and Setters are property of an object.
+
+    // const obj = {
+    //     name: 'Alex',
+    //     age: 25,
+
+    //     get userAge() {
+    //         return this.age;
+    //     }
+    // }
+
+    // console.log(obj.userAge); // We can call this as a normal properties without parentheses
+
+    const obj = {
+        name: 'Alex',
+        age: 25,
+
+        get userAge() {
+            return this.age;
+        },
+
+        set userAge(num) { // this function should get any properties
+            this.age = num;
+        }
+    }
+
+    console.log(obj.userAge); 
+    console.log(obj.userAge = 56);
+    console.log(obj.userAge);
