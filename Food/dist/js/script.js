@@ -551,67 +551,38 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 });
-//Encapsulation
 
-    // class User {
-    //     constructor(name, age) {
-    //         this.name = name;
-    //         this._age = age;
-    //     }
-    //     #surname = 'Petrich';
-    //     say = () => {
-    //         console.log(`my name is ${this.name} ${this.#surname}I am a ${this._age} years old`);
-    //     }
-    //     get age(){
-    //         return this._age;
-    //     }
-    //     set age(age){
-    //         if(typeof age === 'number' && age > 0 && age < 110) {
-    //             this._age = age;
-    //         } else {
-    //             console.log('Invalid value!');
-    //         }
-    //     }
-    // }
+// Modules
+    // let number = 2;
 
-    // const alex = new User('alex', 25);
-    // console.log(alex.surname); // receive undefined
+//   (function(){}()); // anonymous self-calling function
 
-    // alex.say();
-class Alex {
-    constructor(age, skill) {
-        this.skill = skill;
-        this._age = age;
-    }
-    #weight = 80;
-    say () {
-        if(this._age > 0 && this._age < 42) {
-            console.log(`Alex was a ${this.skill} at the age of ${this._age}`);
-        } else {
-            this.skill = 'programmer';
-            console.log(`Alex is now a ${this.skill} and his weight is ${this.#weight}`);
+//create a spase with our own scope
+    // (function(){
+    //     let number = 6;
+    //     console.log(number + 4);
+    //     console.log(number + 6);
+    // }());
+
+    // console.log(number);
+// we receive in console:
+//10 
+//12
+//2
+//These are two different variables
+
+//We can pass this function to a variable
+    // const user = (function(){}());
+
+    const user = (function(){
+        const privat = function() {
+            console.log('I am privat');
         }
-    }
 
-    get age () {
-        return this._age;
-    }
-    set age (age) {
-        if(age > 0 && age < 44 && typeof age === 'number') {
-            this._age = age;
-        } else {
-            console.log('Alex is too small');
-            return;
+        return {     // we can return the object
+            sayHello: privat
         }
-    }
+    }());
 
-
-}
-
-let alex = new Alex(25, 'biologist');
-// alex.age = 27;
-alex.age = 42;
-// alex.age = 56;
-
-console.log(alex.age);
-alex.say();
+    user.sayHello();
+// Now we can use this object which we pass to the user variable
