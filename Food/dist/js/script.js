@@ -552,318 +552,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 });
 //Encapsulation
-//create a function constructor
 
-    // function User(name, age) {
-    //     this.name = name;
-    //     this.age = age;
-
-    //     this.say = () => {
-    //         console.log(`my name is ${this.name} I am a ${this.age} years old`);
-    //     };
-    // }
-
-    // const alex = new User('alex', 25);
-
-    // console.log(alex.name);
-    // alex.name = 'boris';
-    // console.log(alex.name);
-//answer is:
-//alex
-// boris
-// so anyone could change the value of the properties
-
-    // function User(name, age) {
-    //     this.name = name;
-    //     let userAge = age;
-
-    //     this.say = () => {
-    //         console.log(`my name is ${this.name} I am a ${userAge} years old`);
-    //     };
-    // }
-
-    // const alex = new User('alex', 25);
-
-    // alex.name = 'boris';
-    // alex.userAge = 34;
-    // console.log(alex.userAge);
-
-    // alex.say();
-// now userAge couldn't be changed
-
-//try to create functions of getters and setters
-
-    // function User(name, age) {
-    //     this.name = name;
-    //     let userAge = age;
-
-    //     this.say = () => {
-    //         console.log(`my name is ${this.name} I am a ${userAge} years old`);
-    //     };
-
-    //     this.getAge = () => {
-    //         return userAge;
-    //     };
-    //     this.setAge = age => {
-    //         if(typeof age === 'number' && age > 0 && age < 110) {
-    //             userAge = age;
-    //         } else {
-    //             console.log('Invalid value!');
-    //         }
-    //     };
-
-    // }
-
-    // const alex = new User('alex', 25);
-
-    // console.log(alex.name);
-    // console.log(alex.getAge());
-
-    // alex.setAge(30);
-    // alex.setAge(300);
-    // alex.name = 'boris';
-    // console.log(alex.getAge());
-
-    // alex.say();
-//Answer
-// alex
-// 25
-// Invalid value!
-// 30
-// my name is boris I am a 30 years old
-
-//let's try to see what it looks like on the class
-    // class User {
-    //     constructor(name, age) {
-    //         this.name = name;
-    //         let userAge = age;
-    //     }
-        
-    //     say(){
-    //         console.log(`my name is ${this.name} I am a ${userAge} years old`);
-    //     }
-    //     getAge (){
-    //         return userAge;
-    //     }
-    //     setAge(age){
-    //         if(typeof age === 'number' && age > 0 && age < 110) {
-    //             userAge = age;
-    //         } else {
-    //             console.log('Invalid value!');
-    //         }
-    //     }
-
-    // }
-
-    // const alex = new User('alex', 25);
-
-    // console.log(alex.name);
-    // console.log(alex.getAge());
-
-    // alex.setAge(30);
-    // alex.setAge(300);
-    // alex.name = 'boris';
-    // console.log(alex.getAge());
-
-    // alex.say();
-
-// try to call userAge
-    // class User {
-    //     constructor(name, age) {
-    //         this.name = name;
-    //         let userAge = age;
-    //     }
-        
-    //     say(){
-    //         console.log(`my name is ${this.name} I am a ${this.userAge} years old`);
-    //     }
-    //     getAge (){
-    //         return userAge;
-    //     }
-    //     setAge(age){
-    //         if(typeof age === 'number' && age > 0 && age < 110) {
-    //             userAge = age;
-    //         } else {
-    //             console.log('Invalid value!');
-    //         }
-    //     }
-
-    // }
-
-    // const alex = new User('alex', 25);
-
-    // alex.say();
-// answer is:
-//my name is alex I am a undefined years old
-
-//try to create with - this
-    // class User {
-    //     constructor(name, age) {
-    //         this.name = name;
-    //         this.userAge = age;
-    //     }
-        
-    //     say(){
-    //         console.log(`my name is ${this.name} I am a ${this.userAge} years old`);
-    //     }
-    //     getAge (){
-    //         return this.userAge;
-    //     }
-    //     setAge(age){
-    //         if(typeof age === 'number' && age > 0 && age < 110) {
-    //             this.userAge = age;
-    //         } else {
-    //             console.log('Invalid value!');
-    //         }
-    //     }
-
-    // }
-
-    // const alex = new User('alex', 25);
-
-    // console.log(alex.name);
-    // alex.userAge = 99;
-    // console.log(alex.getAge());
-
-    // alex.setAge(30);
-    // alex.setAge(300);
-    // alex.name = 'boris';
-    // console.log(alex.getAge());
-
-    // alex.say();
-//answer is:
-// alex
-// 99               we lose encopsulation !!!
-// Invalid value!
-// 30
-// my name is boris I am a 30 years old
-
-//Therefore classes are not used for encapsulation
-
-//Programmers use loadash to show which features should to hide
-    // class User {
-    //     constructor(name, age) {
-    //         this.name = name;
-    //         this._age = age;
-    //     }
-        
-    //     say(){
-    //         console.log(`my name is ${this.name} I am a ${this._age} years old`);
-    //     }
-    //     get age(){
-    //         return this._age;
-    //     }
-    //     set age(age){
-    //         if(typeof age === 'number' && age > 0 && age < 110) {
-    //             this._age = age;
-    //         } else {
-    //             console.log('Invalid value!');
-    //         }
-    //     }
-
-    // }
-
-    // const alex = new User('alex', 25);
-
-    // console.log(alex.age); //Here we contact to getter
-    // alex.age = 99;         //Here wee contact to setter
-    // console.log(alex.age);
-
-    // alex.say();
-
-// //This is a good approach but can be circumvented and this wrong way (under:)
-//     class User {
-//         constructor(name, age) {
-//             this.name = name;
-//             this._age = age;
-//         }
-        
-//         say(){
-//             console.log(`my name is ${this.name} I am a ${this._age} years old`);
-//         }
-//         get age(){
-//             return this._age;
-//         }
-//         set age(age){
-//             if(typeof age === 'number' && age > 0 && age < 110) {
-//                 this._age = age;
-//             } else {
-//                 console.log('Invalid value!');
-//             }
-//         }
-
-//     }
-
-//     const alex = new User('alex', 25);
-
-//     console.log(alex._age); //we circumvented encapsulation
-//     alex._age = 99;         //and directly changed the entities
-//     console.log(alex._age);
-
-//     alex.say();
-
-
-// Experimental sintaksys in JS
-
-    // class User {
-    //     constructor(name, age) {
-    //         this.name = name;
-    //         this._age = age;
-    //     }
-    //     surname = 'Petrich';
-    //     say(){
-    //         console.log(`my name is ${this.name} ${this.surname}I am a ${this._age} years old`);
-    //     }
-    //     get age(){
-    //         return this._age;
-    //     }
-    //     set age(age){
-    //         if(typeof age === 'number' && age > 0 && age < 110) {
-    //             this._age = age;
-    //         } else {
-    //             console.log('Invalid value!');
-    //         }
-    //     }
-
-    // }
-
-    // const alex = new User('alex', 25);
-
-
-    // alex.say();
-//response in google chrom browser is:
-//my name is alex PetrichI am a 25 years old
-
-// but it only work with googleChrom browser
-
-// and now we can create an arrow function so as not to lose context
-// class User {
-//     constructor(name, age) {
-//         this.name = name;
-//         this._age = age;
-//     }
-//     surname = 'Petrich';
-//     say = () => {
-//         console.log(`my name is ${this.name} ${this.surname}I am a ${this._age} years old`);
-//     }
-//     get age(){
-//         return this._age;
-//     }
-//     set age(age){
-//         if(typeof age === 'number' && age > 0 && age < 110) {
-//             this._age = age;
-//         } else {
-//             console.log('Invalid value!');
-//         }
-//     }
-// }
-
-// const alex = new User('alex', 25);
-
-
-// alex.say();
-
-// Что бы сделать такое свойство приватным, необходимо перед ним поставить решетку #
     // class User {
     //     constructor(name, age) {
     //         this.name = name;
@@ -889,10 +578,40 @@ document.addEventListener('DOMContentLoaded', () => {
     // console.log(alex.surname); // receive undefined
 
     // alex.say();
-// Снаружи мы теперь не можем получить это свойство, но внутри оно выводит
-// какое то значение
-// и даже если мы попытаемся обратится как в примере с лодашами, то у нас ничего не
-// получится так как это свойство является приватным
-    // console.log(alex.#surname); // receive error
-//receive in browser console is:
-//Uncaught SyntaxError: Private field '#surname' must be declared in an enclosing class
+class Alex {
+    constructor(age, skill) {
+        this.skill = skill;
+        this._age = age;
+    }
+    #weight = 80;
+    say () {
+        if(this._age > 0 && this._age < 42) {
+            console.log(`Alex was a ${this.skill} at the age of ${this._age}`);
+        } else {
+            this.skill = 'programmer';
+            console.log(`Alex is now a ${this.skill} and his weight is ${this.#weight}`);
+        }
+    }
+
+    get age () {
+        return this._age;
+    }
+    set age (age) {
+        if(age > 0 && age < 44 && typeof age === 'number') {
+            this._age = age;
+        } else {
+            console.log('Alex is too small');
+            return;
+        }
+    }
+
+
+}
+
+let alex = new Alex(25, 'biologist');
+// alex.age = 27;
+alex.age = 42;
+// alex.age = 56;
+
+console.log(alex.age);
+alex.say();
