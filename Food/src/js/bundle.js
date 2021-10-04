@@ -1,12 +1,17 @@
 /******/ (() => { // webpackBootstrap
+/******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
 /***/ "./src/js/modules/calc.js":
 /*!********************************!*\
   !*** ./src/js/modules/calc.js ***!
   \********************************/
-/***/ ((module) => {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
 function calc() {
     // Calc
 
@@ -117,7 +122,7 @@ function calc() {
     getDinamicInformation('#age');
 }
 
-module.exports = calc;
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (calc);
 
 /***/ }),
 
@@ -125,7 +130,14 @@ module.exports = calc;
 /*!*********************************!*\
   !*** ./src/js/modules/cards.js ***!
   \*********************************/
-/***/ ((module) => {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _services_services__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../services/services */ "./src/js/services/services.js");
+
 
 function cards() {
     // A Menu
@@ -173,15 +185,7 @@ function cards() {
         }
     }
 
-    const getData = async (url) => { 
-        const res = await fetch(url);
-        if(!res.ok) {
-            throw new Error(`Could not fetch ${url} status: ${res.status}`);
-        }
-        return await res.json();
-    }
-
-   getData('http://localhost:3000/menu')
+   (0,_services_services__WEBPACK_IMPORTED_MODULE_0__.getData)('http://localhost:3000/menu')
    .then(data => {
        data.forEach(({img, altimg, title, descr, price})=> {
             new CreateMenu(img, altimg, title, descr, price, '.menu .container').render();
@@ -189,7 +193,7 @@ function cards() {
    });
 }
 
-module.exports = cards;
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (cards);
 
 /***/ }),
 
@@ -197,12 +201,21 @@ module.exports = cards;
 /*!********************************!*\
   !*** ./src/js/modules/form.js ***!
   \********************************/
-/***/ ((module) => {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-function form() {
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _modalWindow__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modalWindow */ "./src/js/modules/modalWindow.js");
+/* harmony import */ var _services_services__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../services/services */ "./src/js/services/services.js");
+
+
+
+function form(formSelector, timerModal) {
         // form
 
-        const forms = document.querySelectorAll('form');
+        const forms = document.querySelectorAll(formSelector);
 
         const message = {
             loading: 'img/form/spinner.svg',
@@ -214,17 +227,6 @@ function form() {
         forms.forEach(item => {
             bindPostData(item);
         });
-    
-        const postData = async (url, data) => {
-            const res = await fetch(url, {
-                method: "POST",
-                headers: {
-                    'content-type': 'application/json'
-                },
-                body: data
-            })
-            return await res.json();
-        }
         
         function bindPostData(form) {
             form.addEventListener('submit', (e) => {
@@ -241,16 +243,16 @@ function form() {
                 const formData = new FormData(form);
     
                 const json = JSON.stringify(Object.fromEntries(formData.entries()));
-                
-                postData('http://localhost:3000/requests', json)
-                .then(date => {
-                    console.log(date);
-                    showThanksModal(message.success);
-                    statusMessage.remove();
-                }).catch(() => {
-                    showThanksModal(message.failure);
-                }).finally(() => {
-                    form.reset();
+
+                (0,_services_services__WEBPACK_IMPORTED_MODULE_1__.postData)('http://localhost:3000/requests', json)
+                    .then(date => {
+                        console.log(date);
+                        showThanksModal(message.success);
+                        statusMessage.remove();
+                    }).catch(() => {
+                        showThanksModal(message.failure);
+                    }).finally(() => {
+                        form.reset();
                 });
             });
         }
@@ -261,7 +263,7 @@ function form() {
         const prevModalDialog = document.querySelector('.modal__dialog');
 
         prevModalDialog.classList.add('hide');
-        openModal();
+        (0,_modalWindow__WEBPACK_IMPORTED_MODULE_0__.openModal)('.modal', timerModal);
 
         const thanksModal = document.createElement('div');
         thanksModal.classList.add('modal__dialog');
@@ -276,12 +278,12 @@ function form() {
             thanksModal.remove();
             prevModalDialog.classList.add('show');
             prevModalDialog.classList.remove('hide');
-            closeModal();
+            (0,_modalWindow__WEBPACK_IMPORTED_MODULE_0__.closeModal)('.modal');
         }, 4000);
     }
 }
 
-module.exports = form;
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (form);
 
 /***/ }),
 
@@ -289,58 +291,73 @@ module.exports = form;
 /*!***************************************!*\
   !*** ./src/js/modules/modalWindow.js ***!
   \***************************************/
-/***/ ((module) => {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-function modalWindow() {
-    //Modal window
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__),
+/* harmony export */   "openModal": () => (/* binding */ openModal),
+/* harmony export */   "closeModal": () => (/* binding */ closeModal)
+/* harmony export */ });
+function openModal(modalSelector, timerModal) {
+    const modalWindow = document.querySelector(modalSelector);
 
-    const btnOpen = document.querySelectorAll('[data-modal]'),
-          btnClose = document.querySelector('[data-close]'),
-          modalWindow = document.querySelector('.modal');
+    modalWindow.classList.add('show');// use the classes
+    modalWindow.classList.remove('hide');
+    document.body.style.overflow = 'hidden';// remove scrolling
 
-
-    function openModal() {
-        modalWindow.classList.add('show');// use the classes
-        modalWindow.classList.remove('hide');
-        document.body.style.overflow = 'hidden';// remove scrolling
-    }
-    
-    function closeModal() {
-        modalWindow.classList.remove('show');
-        modalWindow.classList.add('hide');
-        document.body.style.overflow = '';// return scrolling
+    console.log(timerModal);
+    if(timerModal) {
         clearInterval(timerModal);
     }
+}
+
+function closeModal(modalSelector) {
+    const modalWindow = document.querySelector(modalSelector);
+
+    modalWindow.classList.remove('show');
+    modalWindow.classList.add('hide');
+    document.body.style.overflow = '';// return scrolling
+
+    
+}
+
+function modalWindow(triggerSelector, modalSelector, timerModal) {
+    //Modal window
+
+    const btnOpen = document.querySelectorAll(triggerSelector),
+          modalWindow = document.querySelector(modalSelector);
+
     
     btnOpen.forEach(item => {
-        item.addEventListener('click', openModal);
+        item.addEventListener('click', () => openModal(modalSelector, timerModal));
     });
 
     modalWindow.addEventListener('click', (e) => {
         let target = e.target;
         if(target == modalWindow || target.getAttribute('data-close') == '') {
-            closeModal();
+            closeModal(modalSelector);
         }
     });
 
     document.addEventListener('keydown', (e) => {
         if(e.code == 'Escape' && modalWindow.classList.contains('show')) {
-            closeModal();
+            closeModal(modalSelector);
         }
     });
-   
-    const timerModal = setTimeout(openModal, 50000);
 
     function openModalOffset() {
         if(window.pageYOffset + document.documentElement.clientHeight >= document.documentElement.scrollHeight) {
-            openModal();
+            openModal(modalSelector, timerModal);
             window.removeEventListener('scroll', openModalOffset);
         }
     }
     window.addEventListener('scroll', openModalOffset);
 }
 
-module.exports = modalWindow;
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (modalWindow);
+
+
 
 /***/ }),
 
@@ -348,60 +365,22 @@ module.exports = modalWindow;
 /*!**********************************!*\
   !*** ./src/js/modules/slider.js ***!
   \**********************************/
-/***/ ((module) => {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-function slider() {
-    //slider
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+function slider({slide, nextArrow, prevArrow, totalCounter, currentCounter, wrapper, field}) {
 
-    // const prevSlide = document.querySelector('.offer__slider-prev'),
-    //       nextSlide = document.querySelector('.offer__slider-next'),
-    //       current = document.querySelector('#current'),
-    //       total = document.querySelector('#total'),
-    //       slides = document.querySelectorAll('.offer__slide');
-
-    // let slideIndex = 1;
-    // showSlide(slideIndex);
-
-    // total.innerHTML = `${getZero(slides.length)}`;
-
-    // prevSlide.addEventListener('click', () => {
-    //     if(slideIndex <= 1) {
-    //         slideIndex = slides.length;
-    //         showSlide(slideIndex);
-    //     } else {
-    //         slideIndex = slideIndex - 1;
-    //         showSlide(slideIndex);
-    //     }
-        
-    // });
-
-    // nextSlide.addEventListener('click', () => {
-    //     if(slideIndex >= 4) {
-    //         slideIndex = 1;
-    //         showSlide(slideIndex);
-    //     } else {
-    //         slideIndex = slideIndex + 1;
-    //     showSlide(slideIndex);
-    //     }
-        
-    // });
-
-    // function showSlide() {
-    //     slides.forEach(item => item.classList.add('hide'));
-    //     slides[slideIndex - 1].classList.add('show');
-    //     slides[slideIndex - 1].classList.remove('hide');
-    //     current.innerHTML = `${getZero(slideIndex)}`;
-    // }
     
-// Second way to create the slider from teacher
-    
-    const slides = document.querySelectorAll('.offer__slide'),
-    prev = document.querySelector('.offer__slider-prev'),
-    next = document.querySelector('.offer__slider-next'),
-    total = document.querySelector('#total'),
-    current = document.querySelector('#current'),
-    slideWrapper = document.querySelector('.offer__slider-wrapper'),
-    slidesField = document.querySelector('.offer__slider-inner'),
+    const slides = document.querySelectorAll(slide),
+    prev = document.querySelector(prevArrow),
+    next = document.querySelector(nextArrow),
+    total = document.querySelector(totalCounter),
+    current = document.querySelector(currentCounter),
+    slideWrapper = document.querySelector(wrapper),
+    slidesField = document.querySelector(field),
     width = window.getComputedStyle(slideWrapper).width; //the object is returned. we get only the width
 
     let slideIndex = 1;
@@ -507,7 +486,7 @@ function slider() {
     });
 }
 
-module.exports = slider;
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (slider);
 
 /***/ }),
 
@@ -515,19 +494,23 @@ module.exports = slider;
 /*!********************************!*\
   !*** ./src/js/modules/tabs.js ***!
   \********************************/
-/***/ ((module) => {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-function tabs() {
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+function tabs(tabsSelector, tabsParentSelector, tabsContentSelector, classActive) {
     //Tabs
 
-    let tabsParent = document.querySelector('.tabheader__items'),
-    tabs = document.querySelectorAll('.tabheader__item'),
-    tabContent = document.querySelectorAll('.tabcontent');
+    let tabsParent = document.querySelector(tabsParentSelector),
+    tabs = document.querySelectorAll(tabsSelector),
+    tabContent = document.querySelectorAll(tabsContentSelector);
 
 
     function hideTabsContent() {
         tabs.forEach(item => {
-            item.classList.remove('tabheader__item_active');
+            item.classList.remove(classActive);
         });
 
         tabContent.forEach(item => {
@@ -547,7 +530,7 @@ function tabs() {
     tabsParent.addEventListener('click', e => {
         e.preventDefault();
 
-        if(e.target && e.target.classList.contains('tabheader__item')) {
+        if(e.target && e.target.classList.contains(tabsSelector.slice(1))) {
             const target = e.target;
 
             tabs.forEach((item, i) => {
@@ -560,7 +543,7 @@ function tabs() {
     });
 }
 
-module.exports = tabs;
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (tabs);
 
 /***/ }),
 
@@ -568,12 +551,14 @@ module.exports = tabs;
 /*!*********************************!*\
   !*** ./src/js/modules/timer.js ***!
   \*********************************/
-/***/ ((module) => {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-function timer() {
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+function timer(id, deadLine) {
     //Timer
-
-    const deadLine = '2021-10-30';
 
     function getTimeRemaining(endTime) {
         let t =  Date.parse(endTime) - Date.parse(new Date()),
@@ -625,10 +610,46 @@ function timer() {
             }
         }
     }
-    setClock('.timer', deadLine);
+    setClock(id, deadLine);
 }
 
-module.exports = timer;
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (timer);
+
+/***/ }),
+
+/***/ "./src/js/services/services.js":
+/*!*************************************!*\
+  !*** ./src/js/services/services.js ***!
+  \*************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "postData": () => (/* binding */ postData),
+/* harmony export */   "getData": () => (/* binding */ getData)
+/* harmony export */ });
+const postData = async (url, data) => {
+    const res = await fetch(url, {
+        method: "POST",
+        headers: {
+            'content-type': 'application/json'
+        },
+        body: data
+    })
+    return await res.json();
+}
+
+const getData = async (url) => { 
+    const res = await fetch(url);
+    if(!res.ok) {
+        throw new Error(`Could not fetch ${url} status: ${res.status}`);
+    }
+    return await res.json();
+}
+
+
+
+
 
 /***/ })
 
@@ -659,30 +680,78 @@ module.exports = timer;
 /******/ 	}
 /******/ 	
 /************************************************************************/
+/******/ 	/* webpack/runtime/define property getters */
+/******/ 	(() => {
+/******/ 		// define getter functions for harmony exports
+/******/ 		__webpack_require__.d = (exports, definition) => {
+/******/ 			for(var key in definition) {
+/******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
+/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
+/******/ 				}
+/******/ 			}
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/hasOwnProperty shorthand */
+/******/ 	(() => {
+/******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/make namespace object */
+/******/ 	(() => {
+/******/ 		// define __esModule on exports
+/******/ 		__webpack_require__.r = (exports) => {
+/******/ 			if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 				Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 			}
+/******/ 			Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/************************************************************************/
 var __webpack_exports__ = {};
-// This entry need to be wrapped in an IIFE because it need to be in strict mode.
+// This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
 (() => {
-"use strict";
 /*!**************************!*\
   !*** ./src/js/script.js ***!
   \**************************/
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _modules_form__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modules/form */ "./src/js/modules/form.js");
+/* harmony import */ var _modules_modalWindow__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./modules/modalWindow */ "./src/js/modules/modalWindow.js");
+/* harmony import */ var _modules_slider__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./modules/slider */ "./src/js/modules/slider.js");
+/* harmony import */ var _modules_tabs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modules/tabs */ "./src/js/modules/tabs.js");
+/* harmony import */ var _modules_timer__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./modules/timer */ "./src/js/modules/timer.js");
+/* harmony import */ var _modules_cards__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./modules/cards */ "./src/js/modules/cards.js");
+/* harmony import */ var _modules_calc__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./modules/calc */ "./src/js/modules/calc.js");
+
+    
+    
+    
+    
+    
+    
+    
+    
 
 document.addEventListener('DOMContentLoaded', () => {
-    const form = __webpack_require__(/*! ./modules/form */ "./src/js/modules/form.js"),
-        modal = __webpack_require__(/*! ./modules/modalWindow */ "./src/js/modules/modalWindow.js"),
-        slider = __webpack_require__(/*! ./modules/slider */ "./src/js/modules/slider.js"),
-        tabs = __webpack_require__(/*! ./modules/tabs */ "./src/js/modules/tabs.js"),
-        timer = __webpack_require__(/*! ./modules/timer */ "./src/js/modules/timer.js"),
-        cards = __webpack_require__(/*! ./modules/cards */ "./src/js/modules/cards.js"),
-        calc = __webpack_require__(/*! ./modules/calc */ "./src/js/modules/calc.js");
+    const timerModal = setTimeout(() => (0,_modules_modalWindow__WEBPACK_IMPORTED_MODULE_1__.openModal)('.modal', timerModal), 50000);
+
     
-    form();
-    modal();
-    slider();
-    tabs();
-    timer();
-    cards();
-    calc();
+    (0,_modules_form__WEBPACK_IMPORTED_MODULE_0__["default"])('form' , timerModal);
+    (0,_modules_modalWindow__WEBPACK_IMPORTED_MODULE_1__["default"])('[data-modal]', '.modal', timerModal);
+    (0,_modules_tabs__WEBPACK_IMPORTED_MODULE_3__["default"])('.tabheader__item', '.tabheader__items', '.tabcontent', 'tabheader__item_active');
+    (0,_modules_timer__WEBPACK_IMPORTED_MODULE_4__["default"])('.timer', '2021-10-30');
+    (0,_modules_cards__WEBPACK_IMPORTED_MODULE_5__["default"])();
+    (0,_modules_calc__WEBPACK_IMPORTED_MODULE_6__["default"])();
+    (0,_modules_slider__WEBPACK_IMPORTED_MODULE_2__["default"])({
+        slide: '.offer__slide',
+        nextArrow: '.offer__slider-next',
+        prevArrow: '.offer__slider-prev',
+        totalCounter: '#total',
+        currentCounter: '#current',
+        wrapper: '.offer__slider-wrapper',
+        field: '.offer__slider-inner'
+    });
 });
 })();
 

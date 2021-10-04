@@ -1,55 +1,13 @@
-function slider() {
-    //slider
+function slider({slide, nextArrow, prevArrow, totalCounter, currentCounter, wrapper, field}) {
 
-    // const prevSlide = document.querySelector('.offer__slider-prev'),
-    //       nextSlide = document.querySelector('.offer__slider-next'),
-    //       current = document.querySelector('#current'),
-    //       total = document.querySelector('#total'),
-    //       slides = document.querySelectorAll('.offer__slide');
-
-    // let slideIndex = 1;
-    // showSlide(slideIndex);
-
-    // total.innerHTML = `${getZero(slides.length)}`;
-
-    // prevSlide.addEventListener('click', () => {
-    //     if(slideIndex <= 1) {
-    //         slideIndex = slides.length;
-    //         showSlide(slideIndex);
-    //     } else {
-    //         slideIndex = slideIndex - 1;
-    //         showSlide(slideIndex);
-    //     }
-        
-    // });
-
-    // nextSlide.addEventListener('click', () => {
-    //     if(slideIndex >= 4) {
-    //         slideIndex = 1;
-    //         showSlide(slideIndex);
-    //     } else {
-    //         slideIndex = slideIndex + 1;
-    //     showSlide(slideIndex);
-    //     }
-        
-    // });
-
-    // function showSlide() {
-    //     slides.forEach(item => item.classList.add('hide'));
-    //     slides[slideIndex - 1].classList.add('show');
-    //     slides[slideIndex - 1].classList.remove('hide');
-    //     current.innerHTML = `${getZero(slideIndex)}`;
-    // }
     
-// Second way to create the slider from teacher
-    
-    const slides = document.querySelectorAll('.offer__slide'),
-    prev = document.querySelector('.offer__slider-prev'),
-    next = document.querySelector('.offer__slider-next'),
-    total = document.querySelector('#total'),
-    current = document.querySelector('#current'),
-    slideWrapper = document.querySelector('.offer__slider-wrapper'),
-    slidesField = document.querySelector('.offer__slider-inner'),
+    const slides = document.querySelectorAll(slide),
+    prev = document.querySelector(prevArrow),
+    next = document.querySelector(nextArrow),
+    total = document.querySelector(totalCounter),
+    current = document.querySelector(currentCounter),
+    slideWrapper = document.querySelector(wrapper),
+    slidesField = document.querySelector(field),
     width = window.getComputedStyle(slideWrapper).width; //the object is returned. we get only the width
 
     let slideIndex = 1;
@@ -155,4 +113,4 @@ function slider() {
     });
 }
 
-module.exports = slider;
+export default slider;

@@ -1,7 +1,10 @@
-function form() {
+import {closeModal, openModal} from './modalWindow';
+import {postData} from '../services/services';
+
+function form(formSelector, timerModal) {
         // form
 
-        const forms = document.querySelectorAll('form');
+        const forms = document.querySelectorAll(formSelector);
 
         const message = {
             loading: 'img/form/spinner.svg',
@@ -13,17 +16,6 @@ function form() {
         forms.forEach(item => {
             bindPostData(item);
         });
-    
-        const postData = async (url, data) => {
-            const res = await fetch(url, {
-                method: "POST",
-                headers: {
-                    'content-type': 'application/json'
-                },
-                body: data
-            })
-            return await res.json();
-        }
         
         function bindPostData(form) {
             form.addEventListener('submit', (e) => {
@@ -40,16 +32,16 @@ function form() {
                 const formData = new FormData(form);
     
                 const json = JSON.stringify(Object.fromEntries(formData.entries()));
-                
+
                 postData('http://localhost:3000/requests', json)
-                .then(date => {
-                    console.log(date);
-                    showThanksModal(message.success);
-                    statusMessage.remove();
-                }).catch(() => {
-                    showThanksModal(message.failure);
-                }).finally(() => {
-                    form.reset();
+                    .then(date => {
+                        console.log(date);
+                        showThanksModal(message.success);
+                        statusMessage.remove();
+                    }).catch(() => {
+                        showThanksModal(message.failure);
+                    }).finally(() => {
+                        form.reset();
                 });
             });
         }
@@ -60,7 +52,7 @@ function form() {
         const prevModalDialog = document.querySelector('.modal__dialog');
 
         prevModalDialog.classList.add('hide');
-        openModal();
+        openModal('.modal', timerModal);
 
         const thanksModal = document.createElement('div');
         thanksModal.classList.add('modal__dialog');
@@ -75,9 +67,9 @@ function form() {
             thanksModal.remove();
             prevModalDialog.classList.add('show');
             prevModalDialog.classList.remove('hide');
-            closeModal();
+            closeModal('.modal');
         }, 4000);
     }
 }
 
-module.exports = form;
+export default form;
